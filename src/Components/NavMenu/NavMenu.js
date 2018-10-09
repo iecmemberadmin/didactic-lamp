@@ -59,6 +59,9 @@ class NavMenu extends Component {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
+              <NavItem>
+                <NavLink href="/profile">Clubber Profile</NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
