@@ -11,7 +11,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
-import iec from '../../Assets/Images/ieclub.png';
+import iec from '../../assets/Images/ieclub.png';
 
 
 class NavMenu extends Component {

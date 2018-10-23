@@ -3,10 +3,10 @@ import './App.css';
 // eslint-disable-next-line
 import {Switch, Route} from 'react-router-dom';
 // eslint-disable-next-line
-import NavMenu from './Components/NavMenu/NavMenu';
-import Login from './Components/Login/Login';
-import Dashboard from './Components/Dashboard/Dashboard';
-import ClubberProfile from './Components/ClubberProfile/ClubberProfile';
+import NavMenu from './components/NavMenu/NavMenu';
+import Login from './components/Login/Login';
+import Dashboard from './components/Dashboard/Dashboard';
+import ClubberProfile from './components/ClubberProfile/ClubberProfile';
 
 class App extends Component {
   render() {

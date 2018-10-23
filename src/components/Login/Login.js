@@ -1,7 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line
 import { Card, CardText, CardBody, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import iec from '../../Assets/Images/ieclub.png';
+import iec from '../../assets/Images/ieclub.png';
 
 const Login = () => {
   return( 
