@@ -32,7 +32,7 @@ class NavMenu extends Component {
     return (
       <div>
         <Navbar color="danger" dark expand="md">
-          <NavbarBrand href="/"><img alt='IECLUBLOGO' src={iec} height='10%' width='10%'/> Inside The Club</NavbarBrand>
+          <NavbarBrand href="/dashboard"><img alt='IECLUBLOGO' src={iec} height='10%' width='10%'/> Inside The Club</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -61,6 +61,9 @@ class NavMenu extends Component {
               </UncontrolledDropdown>
               <NavItem>
                 <NavLink href="/profile">Clubber Profile</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/">Logout</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
