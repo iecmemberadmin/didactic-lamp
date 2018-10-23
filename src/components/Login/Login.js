@@ -31,7 +31,7 @@ class Login extends Component {
       password: this.state.password
     });
     this.setState({isLoading: true})
-    axios.get(`http://clubberdb-api.herokuapp.com/clubbers/${this.state.student_number}/?password=${this.state.password}`)
+    axios.get(`http://clubberdb-api.herokuapp.com/clubbers/${this.state.student_number}/?password=${this.state.password}/`)
     .then(response => {
       if(response.status === 200) {
         this.setState({isLoading: false});
