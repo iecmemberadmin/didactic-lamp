@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import { Card, CardText, CardBody, Button, Form, FormGroup, Label, Input, FormText, Alert } from 'reactstrap';
 import iec from '../../assets/Images/ieclub.png';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import {authenticate} from '../../actions/authActions';
 
 class Login extends Component {
   constructor(props) {
@@ -26,24 +28,37 @@ class Login extends Component {
   }
 
   logIn = () => {
-    console.log({
-      student_number: this.state.student_number,
-      password: this.state.password
-    });
-    this.setState({isLoading: true})
-    axios.get(`http://clubberdb-api.herokuapp.com/clubbers/${this.state.student_number}/?password=${this.state.password}`)
-    .then(response => {
-      if(response.status === 200) {
-        this.setState({isLoading: false});
-        this.props.history.push('/dashboard');
-        console.log('Login successful');
-      }
-    })
-    .catch(error => {
-      if(error.response.status === 404) {
-        this.setState({visible: true, isLoading: false});
-      }
-    });
+    this.setState({isLoading: true});
+    if(this.state.student_number === 'clubberadmin' && this.state.password === 'ieclubwinternals') {
+      this.setState({isLoading: false});
+      localStorage.setItem('authenticatedAdmin', 'true');
+      this.props.history.push('/admin');
+    }else {
+      axios.get(`https://clubberdb-api.herokuapp.com/login/${this.state.student_number}/?password=${this.state.password}`)
+      .then(response => {
+        if(response.status === 200) {
+          this.setState({isLoading: false});
+          localStorage.setItem('authenticated', 'true');
+          localStorage.setItem('authenticatedAdmin', 'false');
+          localStorage.setItem('student_number', this.state.student_number);
+          this.props.history.push('/dashboard');
+          console.log('Login successful');
+          //this.props.authenticateUser();
+        }
+      })
+      .catch(error => {
+        if(error.response.status === 404) {
+          this.setState({visible: true, isLoading: false});
+        }
+        localStorage.setItem('authenticated', ' false');
+        localStorage.setItem('authenticatedAdmin', 'false');
+      });
+    }
+    
+  }
+
+  componentDidMount() {
+    localStorage.setItem('authenticated', 'false');
   }
 
   render() {
@@ -59,14 +74,15 @@ class Login extends Component {
           </Alert>
           <Card id='login'>
             <CardBody>
+              <h4 className='centered'>Sign In</h4>
               <Form>
                 <FormGroup>
-                  <Label for="studNum">Student Number</Label>
-                  <Input type="text" name="studNum" id="student_number" onChange={this.onChange} placeholder="2015-12345" />
+                  {/* <Label for="studNum">Student Number</Label> */}
+                  <Input type="text" name="studNum" id="student_number" onChange={this.onChange} placeholder="Student Number" />
                 </FormGroup>
                 <FormGroup>
-                  <Label for="password">Password</Label>
-                  <Input type="password" name="password" id="password" onChange={this.onChange}/>
+                  {/* <Label for="password">Password</Label> */}
+                  <Input type="password" name="password" id="password" onChange={this.onChange} placeholder='Password' />
                 </FormGroup>
                 <div className='centered'><Button outline color='danger' onClick={this.logIn}>Login</Button></div>
               </Form>
@@ -78,4 +94,12 @@ class Login extends Component {
   }
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+const mapActionsToProps = {
+  authenticateUser: authenticate
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(Login);

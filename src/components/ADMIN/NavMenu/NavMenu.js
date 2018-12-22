@@ -11,8 +11,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
-import iec from '../../assets/Images/ieclub.png';
-
+import iec from '../../../assets/Images/ieclub.png';
 
 class NavMenu extends Component {
   constructor(props) {
@@ -59,12 +58,6 @@ class NavMenu extends Component {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <NavItem>
-                <NavLink href="/directory">Directory</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/profile">Clubber Profile</NavLink>
-              </NavItem>
               <NavItem>
                 <NavLink href="/">Logout</NavLink>
               </NavItem>

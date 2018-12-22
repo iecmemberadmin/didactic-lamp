@@ -1,26 +1,53 @@
 import React, { Component } from 'react';
 import './App.css';
 // eslint-disable-next-line
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, withRouter} from 'react-router-dom';
 // eslint-disable-next-line
 import NavMenu from './components/NavMenu/NavMenu';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import ClubberProfile from './components/ClubberProfile/ClubberProfile';
+import PrivateRoute from './PrivateRoute';
+import {connect} from 'react-redux';
+import Directory from './components/Directory/Directory';
+import AdminDashboard from './components/ADMIN/AdminDashboard/AdminDashboard';
+
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  checkAuth = () => {
+    let authenticated = localStorage.getItem('authenticated');
+    if(authenticated === 'true') {
+      return true;
+    }else {
+      return false;
+    }
+  }
+
   render() {
     return (
       <div>
         {/* <NavMenu /> */}
         <Switch>
           <Route exact path='/' component={Login} />
-          <Route exact path='/dashboard' component={Dashboard} />
-          <Route exact path='/profile' component={ClubberProfile} />
+          {/* <Route exact path='/dashboard' component={Dashboard} /> */}
+          <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/dashboard' component={Dashboard} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/profile' component={ClubberProfile} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/directory' component={Directory} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin' component={AdminDashboard} />
+          {/* <Route exact path='/profile' component={ClubberProfile} /> */}
         </Switch>
       </div>  
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default withRouter(connect(mapStateToProps)(App));
