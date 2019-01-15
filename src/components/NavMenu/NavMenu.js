@@ -32,33 +32,30 @@ class NavMenu extends Component {
     return (
       <div>
         <Navbar color="danger" dark expand="md">
-          <NavbarBrand href="/dashboard"><img alt='IECLUBLOGO' src={iec} height='10%' width='10%'/> Inside The Club</NavbarBrand>
+          <NavbarBrand href="/dashboard">{/*<img alt='ieclub' src={iec} height='10%' width='10%'/>*/} Inside The Club</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/components/">Components</NavLink>
+                <NavLink>Announcements</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
+              {/* <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Options
+                  Academics
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>
-                    Option 1
+                  <DropdownItem href='/directory'>
+                    Directory
                   </DropdownItem>
-                  <DropdownItem>
-                    Option 2
+                  <DropdownItem href='/profile'>
+                    Clubber Profile
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
                     Reset
                   </DropdownItem>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </UncontrolledDropdown> */}
               <NavItem>
                 <NavLink href="/directory">Directory</NavLink>
               </NavItem>

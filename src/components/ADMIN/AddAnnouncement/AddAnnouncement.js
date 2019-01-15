@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
-import NavMenu from '../NavMenu/NavMenu';
 import {Container} from 'reactstrap';
+import NavMenu from '../NavMenu/NavMenu';
 
-class AdminDashboard extends Component {
+class AddAnnouncement extends Component {
   render() {
     return(
       <div>
         <NavMenu />
         <Container>
-          <h3>Welcome, Admin.</h3>
+          <h3>Add New Announcement</h3>
         </Container>
       </div>
     );
   }
-};
+}
 
-export default AdminDashboard;
+export default AddAnnouncement;

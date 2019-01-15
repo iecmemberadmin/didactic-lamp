@@ -28,7 +28,7 @@ class Login extends Component {
   }
 
   logIn = () => {
-    this.setState({isLoading: true});
+    this.setState({isLoading: true, visible: false});
     if(this.state.student_number === 'clubberadmin' && this.state.password === 'ieclubwinternals') {
       this.setState({isLoading: false});
       localStorage.setItem('authenticatedAdmin', 'true');
@@ -59,12 +59,12 @@ class Login extends Component {
 
   componentDidMount() {
     localStorage.setItem('authenticated', 'false');
+    localStorage.setItem('authenticatedAdmin', 'false');
   }
 
   render() {
     return( 
       <div className='container'>
-        <div className='centered'><h4 className='text-danger'><img alt='IECLUBLOGO' src={iec} height='5%' width='5%' /> Inside The Club</h4></div>
         <div>
           <Alert color='danger' isOpen={this.state.visible} toggle={this.onDismiss}>
             Invalid username and/or password.
@@ -74,6 +74,7 @@ class Login extends Component {
           </Alert>
           <Card id='login'>
             <CardBody>
+              <div className='centered'><h4 className='text-danger'><img alt='IECLUBLOGO' src={iec} height='5%' width='5%' /> Inside The Club</h4></div>
               <h4 className='centered'>Sign In</h4>
               <Form>
                 <FormGroup>
@@ -84,6 +85,7 @@ class Login extends Component {
                   {/* <Label for="password">Password</Label> */}
                   <Input type="password" name="password" id="password" onChange={this.onChange} placeholder='Password' />
                 </FormGroup>
+                <Button color='link' href='/signup'>Don't have an account? Sign up here.</Button>
                 <div className='centered'><Button outline color='danger' onClick={this.logIn}>Login</Button></div>
               </Form>
             </CardBody>

@@ -31,33 +31,58 @@ class NavMenu extends Component {
     return (
       <div>
         <Navbar color="danger" dark expand="md">
-          <NavbarBrand href="/dashboard"><img alt='IECLUBLOGO' src={iec} height='10%' width='10%'/> Inside The Club</NavbarBrand>
+          <NavbarBrand href="/admin">{/*<img alt='IECLUBLOGO' src={iec} height='10%' width='10%'/>*/} Inside The Club Admin</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-              </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Options
+                  Announcements
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>
-                    Option 1
-                  </DropdownItem>
-                  <DropdownItem>
-                    Option 2
+                  <DropdownItem href='/admin/view/announcement'>
+                    View All Announcements
                   </DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
+                  <DropdownItem href='/admin/add/announcement'>
+                    Add Announcement
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Engg Week
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem href='/admin/view/announcement'>
+                    View All Announcements
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem href='/admin/add/announcement'>
+                    Add Announcement
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Clubbers
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem href='/admin/view/registered'>
+                    View All Registered Clubbers
+                  </DropdownItem>
+                  <DropdownItem href='/admin/view/reaffed'>
+                    View All Reaffed Clubbers
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem href='/admin/add/clubber'>
+                    Add New Clubber
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+              <NavItem>
+                <NavLink href='/admin/processes'>View Processes</NavLink>
+              </NavItem>
               <NavItem>
                 <NavLink href="/">Logout</NavLink>
               </NavItem>
