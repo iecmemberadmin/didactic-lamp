@@ -41,7 +41,13 @@ class ConfirmPending extends Component {
       carpool_capacity: clubber.carpool_capacity,
       av_equipment: clubber.av_equipment,
       sports_equipment: clubber.sports_equipment,
-      instruments: clubber.instruments
+      instruments: clubber.instruments,
+      current_subjects: clubber.current_subjects,
+      closest_friends: clubber.closest_friends,
+      ieaid_company: clubber.ieaid_company,
+      ieaid_contactperson: clubber.ieaid_contactperson,
+      ieaid_contactdetails: clubber.ieaid_contactdetails,
+      candy: clubber.candy
     }).then(response => {
       axios.post('https://clubberdb-api.herokuapp.com/auth/', {
         clubber: clubber.student_number,
