@@ -71,7 +71,7 @@ class Directory extends Component {
             <ModalHeader toggle={this.toggle}><h4 style={{color: 'red'}}>Clubber Details: {this.state.activeClubber.nick_name} {this.state.activeClubber.last_name}</h4></ModalHeader>
             <ModalBody>
               <h4>{this.state.activeClubber.first_name} {this.state.activeClubber.last_name}</h4>
-              {this.state.activeClubber.student_number} <br/> {this.state.activeClubber.degree_program}
+              {this.state.activeClubber.degree_program}
               <br/>
               <br/>
               <i>{this.state.activeClubber.position} {this.state.activeClubber.project !== 'N/A' && '(' + this.state.activeClubber.project + ')'} <br/> {this.state.activeClubber.committee}</i> 
@@ -80,8 +80,6 @@ class Directory extends Component {
               {this.state.activeClubber.mobile_number}
               <br/>
               {this.state.activeClubber.email_address}
-              <br/>
-              {this.state.activeClubber.present_address}
             </ModalBody>
             <ModalFooter>
               <Button color="primary" onClick={this.toggle}>Exit</Button>
