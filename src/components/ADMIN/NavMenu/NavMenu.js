@@ -74,6 +74,9 @@ class NavMenu extends Component {
                   <DropdownItem href='/admin/view/reaffed'>
                     View All Reaffed Clubbers
                   </DropdownItem>
+                  <DropdownItem href='/admin/view/pending'>
+                    Pending Signup Requests
+                  </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem href='/admin/add/clubber'>
                     Add New Clubber

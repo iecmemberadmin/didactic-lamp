@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavMenu from '../NavMenu/NavMenu';
-import {Container, Table, Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody, CardTitle, CardSubtitle, CardText, Button, FormGroup, InputGroup, InputGroupAddon, Input} from 'reactstrap';
+import {Container, Table, Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody, CardTitle, CardSubtitle, CardText, Button, FormGroup, InputGroup, InputGroupAddon, Input, Alert} from 'reactstrap';
 import axios from 'axios';
 
 class Directory extends Component {
@@ -24,10 +24,11 @@ class Directory extends Component {
   }
 
   componentWillMount() {
+    this.setState({loadingAlert: true});
     axios.get('https://clubberdb-api.herokuapp.com/clubbers/')
     .then(response => {
       if(response.status === 200) {
-        this.setState({clubbers: response.data, search: response.data});
+        this.setState({clubbers: response.data, search: response.data, loadingAlert: false});
         console.log(response.data);
       }
     });
@@ -52,10 +53,10 @@ class Directory extends Component {
         let last_name = item.last_name.toLowerCase();
         let first_name = item.first_name.toLowerCase();
         let middle_name = item.middle_name.toLowerCase();
-        let student_number = item.student_number;
+        let nick_name = item.nick_name.toLowerCase();
         query = query.toLowerCase();
         
-        return (last_name.includes(query) || first_name.includes(query) || middle_name.includes(query) || student_number.includes(query));
+        return (last_name.includes(query) || first_name.includes(query) || middle_name.includes(query) || nick_name.includes(query));
       })});
     }
   }
@@ -86,39 +87,42 @@ class Directory extends Component {
               <Button color="primary" onClick={this.toggle}>Exit</Button>
             </ModalFooter>
           </Modal>
-          <FormGroup>
-            <InputGroup>
+          {this.state.loadingAlert ?
+          <Alert color="light" isOpen={this.state.loadingAlert}>
+            <p className='centered'>Loading data, please wait ... </p>
+          </Alert>
+          :
+          <div>
+            <FormGroup>
               <Input type='text' name='search_query' placeholder='Search Clubbers' onChange={this.search} value={this.state.search_query}/>
-            </InputGroup>
-          </FormGroup>
-          <Table striped hover responsive> 
-            <thead>
-              <tr>
-                <th>Student Number</th>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>Committee</th>
-                <th>Position</th>
-                <th>Project</th>
-                <th>Details</th>
-              </tr>
-            </thead>
-            <tbody>
-            {this.state.search.map((item, i) => {
-              return(
+            </FormGroup>
+            <Table striped hover responsive> 
+              <thead>
                 <tr>
-                  <td>{item.student_number}</td>
-                  <td>{item.last_name}</td>
-                  <td>{item.first_name}</td>
-                  <td>{item.committee}</td>
-                  <td>{item.position}</td>
-                  <td>{item.project}</td>
-                  <td><Button color='success' onClick={() => this.toggleDetailsModal(item)}>View Details</Button></td>
+                  <th>Last Name</th>
+                  <th>First Name</th>
+                  <th>Committee</th>
+                  <th>Position</th>
+                  <th>Project</th>
+                  <th>Details</th>
                 </tr>
-              );
-            })}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+              {this.state.search.map((item, i) => {
+                return(
+                  <tr>
+                    <td>{item.last_name}</td>
+                    <td>{item.first_name}</td>
+                    <td>{item.committee}</td>
+                    <td>{item.position}</td>
+                    <td>{item.project}</td>
+                    <td><Button color='success' onClick={() => this.toggleDetailsModal(item)}>View Details</Button></td>
+                  </tr>
+                );
+              })}
+              </tbody>
+            </Table>
+          </div>}
         </Container>
       </div>
     );

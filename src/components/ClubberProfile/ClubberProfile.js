@@ -10,6 +10,7 @@ class ClubberProfile extends Component {
       activeClubber: {},
       detailsModal: false,
       reaffModal: false,
+      contractModal: false,
       reaffDetailsModal: false,
       isReaffActive: false,
       isReaffed: false,
@@ -67,17 +68,20 @@ class ClubberProfile extends Component {
         'clubber': this.state.activeClubber.student_number,
         'last_name': this.state.activeClubber.last_name,
         'updated_db': true,
+        'read_contract': true,
         'submitted_docs': false,
-        'paid_fee': false
+        'paid_fee': false,
+        'ew_participation': false,
+        'ew_jersey': false
       })
       .then(response => {
         console.log(response);
         window.location.reload();
       }).catch(error => {
-        console.log('done with post');
+        
       });
     }).catch(error => {
-      console.log('done with put');
+      
     });
   }
 
@@ -87,6 +91,18 @@ class ClubberProfile extends Component {
     let activeClubber = this.state.activeClubber;
     activeClubber[name] = value;
     this.setState({activeClubber: activeClubber});
+  }
+
+  toggleContractModal = () => {
+    this.setState({contractModal: !this.state.contractModal});
+  }
+
+  goToContract = () => {
+    this.setState({contractModal: true, reaffModal: false});
+  }
+
+  goBackToInfo = () => {
+    this.setState({reaffModal: true, contractModal: false});
   }
 
   render() {
@@ -128,7 +144,7 @@ class ClubberProfile extends Component {
             </CardBody>
           </Card>}
           <br/>
-          <Modal isOpen={this.state.reaffDetailsModal} toggle={this.toggleReaffDetailsModal}>
+          <Modal isOpen={this.state.reaffDetailsModal} toggle={this.toggleReaffDetailsModal} size='lg'>
             <ModalHeader toggle={this.toggleReaffDetailsModal}>Your Reaff Progress</ModalHeader>
             <ModalBody>
               <Table>
@@ -136,24 +152,80 @@ class ClubberProfile extends Component {
                   <tr>
                     <th>Student Number</th>
                     <th>Updated Database Info?</th>
+                    <th>Read Contract?</th>
                     <th>Submitted Form 5 + ID?</th>
                     <th>Paid Reaff Fee?</th>
+                    <th>Answered the EW Participation Survey?</th>
+                    <th>Answered the EW Jersey/Tickets Survey?</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>{this.state.activeClubber.student_number}</td>
                     <td>{this.state.reaffDetails.updated_db ? 'Yes' : 'No'}</td>
+                    <td>{this.state.reaffDetails.read_contract ? 'Yes' : 'No'}</td>
                     <td>{this.state.reaffDetails.submitted_docs ? 'Yes' : 'No'}</td>
                     <td>{this.state.reaffDetails.paid_fee ? 'Yes' : 'No'}</td>
+                    <td>{this.state.reaffDetails.ew_participation ? 'Yes' : 'No'}</td>
+                    <td>{this.state.reaffDetails.ew_jersey ? 'Yes' : 'No'}</td>
                   </tr>
                 </tbody>
               </Table>
               <br/>
-              <i><b>NOTES:</b><br/>- Submit your scanned copy of Form 5 + ID to member.admin@upieclub.org or photocopy to the Member Administration Team, or to your batch rep. <br/>- Pay the Reaff Fee of PHP 130 to the Member Administration Team, or to your batch rep.</i>
+              <i><b>NOTES:</b><br/>- Submit your scanned copy of Form 5 + ID to member.admin@upieclub.org or head to the tambayan and have your Form 5 + ID scanned. For scanning schedules, the team will post when the scanner will be ready at the tambayan. <br/>- Pay the Reaff Fee of PHP 150 to the Member Administration Team, or to your batch rep.<br/>- Answer the <a href='https://tinyurl.com/MyRoleThisEWOC30' target='_blank'>Engg Week Participation Survey</a> and <a href='https://tinyurl.com/EWOC30jerseytix' target='_blank'>Engg Week Jersey/Tickets Survey</a>.</i>
             </ModalBody>
             <ModalFooter>
               <Button color="success" onClick={this.toggleReaffDetailsModal}>Done</Button>
+            </ModalFooter>
+          </Modal>
+          <Modal isOpen={this.state.contractModal} toggle={this.toggleContractModal} size='lg'>
+            <ModalHeader toggle={this.toggleContractModal}>Contract</ModalHeader>
+            <ModalBody>
+              <i>As a Clubber, I fully understand and agree to the following:</i>
+              <ul>
+                <li>
+                  To complete the reaffiliation process, the following requirements must be met by the deadline:
+                  <ul>
+                    <li>Submission of Form 5 and ID</li>
+                    <li>Database Information Update</li>
+                    <li>Payment of Reaffiliation Fee of Php 150</li>
+                    <li>Accomplishment of the Engineering Week Participation Survey</li>
+                    <li>Accomplishment of the Engineering Week Jersey/Tickets Survey</li>
+                  </ul>
+                </li>
+                <li>
+                  A member's failure to complete the reaffiliation process (i.e. full reaffiliation) will automatically result in a status of <b>INACTIVE</b> for the semester, regardless of the CRS-evaluated result from the previous semester
+                </li>
+                <li>
+                  A member's failure to attend at least <b>ONE</b> (1) general meeting or <b>TWO</b> (2) committee meetings <b>without any valid excuse*</b> will automatically result in a status of INACTIVE for the semester, regardless of the CRS-evaluated result from the previous semester 
+                </li>
+                <li>
+                  A fully reaffiliated member's status will be re-evaluated at the end of the semester through the Clubber Rating Scheme, with the following components: Event Involvement and Member Assessment
+                  <ul>
+                    <li>A satisfactory rating of 60 or greater will result in an <span style={{color: 'green'}}>ACTIVE</span> status</li>
+                    <li>A passable rating of [50, 60) will result in a <span style={{color: 'orange'}}>PROBATIONARY</span> status</li>
+                    <li>An unsatisfactory rating of less than 50 will result in an <span style={{color: 'red'}}>INACTIVE</span> status</li>
+                  </ul>
+                </li>
+                <li>
+                  A member with Probationary status will be monitored by the Executive Committee; failure to reach an active status in the rest of the member's succeeding semesters will automatically tag the member as <b>INACTIVE</b>
+                </li>
+                <li>
+                  A member's attainment of a total of <b>TWO</b> (2) semesters tagged as <b>INACTIVE</b>, regardless if theses semesters are consecutive or not, will result in the member being a candidate for <b>TERMINATION</b> of membership
+                </li>
+                <li>
+                  Candidates for termination of membership may appeal to the Executive Committee, which will then deliberate on the cases and release the official results thereafter
+                </li>
+                <li>
+                  Those officially stripped of their membership must undergo and pass the application process to be readmitted to the organization
+                </li>
+              </ul>
+              <br />
+              <p>By clicking the submit button, I am confirming that I have read and understood the contract.</p>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={this.goBackToInfo}>Back</Button>{' '}
+              <Button color="success" onClick={this.submitReaff}>Confirm and Submit Reaff Application</Button>
             </ModalFooter>
           </Modal>
           <Modal isOpen={this.state.reaffModal} toggle={this.toggleReaffModal} size='lg'>
@@ -296,11 +368,88 @@ class ClubberProfile extends Component {
                     </td>
                   </tr>
                 </tbody>
+                <thead>
+                  <tr><i><h5>Additional Info</h5></i></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Car Capacity for Carpool (Write 0 if not applicable)</th>
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='carpool_capacity' onChange={this.onChange} value={this.state.activeClubber.carpool_capacity}/>
+                      </FormGroup>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>A/V Equipment (Put N/A if not applicable)</th>
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='av_equipment' onChange={this.onChange} value={this.state.activeClubber.av_equipment}/>
+                      </FormGroup>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Sports Equipment (Put N/A if not applicable)</th>
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='sports_equipment' onChange={this.onChange} value={this.state.activeClubber.sports_equipment}/>
+                      </FormGroup>
+                    </td>
+                  </tr>
+                  <tr>
+                  <th>Instruments (Put N/A if not applicable)</th>
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='instruments' onChange={this.onChange} value={this.state.activeClubber.instruments}/>
+                      </FormGroup>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>What are the subjects you are currently enrolled in for this semester?</th>
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='current_subjects' onChange={this.onChange} value={this.state.activeClubber.current_subjects}/>
+                      </FormGroup>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Who are your closest friends in IE Club?</th>
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='closest_friends' onChange={this.onChange} value={this.state.activeClubber.closest_friends}/>
+                      </FormGroup>
+                    </td>
+                  </tr>
+                  <tr>
+                  <th>Social Enterprise/NGO Recommendation for IEAid</th>
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='ieaid_company' onChange={this.onChange} value={this.state.activeClubber.ieaid_company}/>
+                      </FormGroup>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Contact Person (IEAid)</th>
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='ieaid_contactperson' onChange={this.onChange} value={this.state.activeClubber.ieaid_contactperson}/>
+                      </FormGroup>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Contact Details (IEAid)</th>
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='ieaid_contactdetails' onChange={this.onChange} value={this.state.activeClubber.ieaid_contactdetails}/>
+                      </FormGroup>
+                    </td>
+                  </tr>
+                </tbody>
               </Table>
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" href='/profile'>Cancel</Button>
-              <Button color="success" onClick={this.submitReaff}>Confirm and Submit Reaff Application</Button>
+              <Button color="info" onClick={this.goToContract}>Continue</Button>
             </ModalFooter>
           </Modal>
           <Modal isOpen={this.state.detailsModal} toggle={this.toggleDetailsModal} size='lg'>

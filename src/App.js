@@ -18,6 +18,7 @@ import ViewRegistered from './components/ADMIN/ViewRegistered/ViewRegistered';
 import ViewProcesses from './components/ADMIN/ViewProcesses/ViewProcesses';
 import ViewReaffed from './components/ADMIN/ViewReaffed/ViewReaffed';
 import Signup from './components/Signup/Signup';
+import ConfirmPending from './components/ADMIN/ConfirmPending/ConfirmPending';
 
 
 class App extends Component {
@@ -53,6 +54,7 @@ class App extends Component {
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/view/registered' component={ViewRegistered} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/view/reaffed' component={ViewReaffed} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/processes' component={ViewProcesses} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/view/pending' component={ConfirmPending} />
           {/* <Route exact path='/profile' component={ClubberProfile} /> */}
         </Switch>
       </div>  

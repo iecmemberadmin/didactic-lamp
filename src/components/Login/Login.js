@@ -66,16 +66,16 @@ class Login extends Component {
     return( 
       <div className='container'>
         <div>
-          <Alert color='danger' isOpen={this.state.visible} toggle={this.onDismiss}>
-            Invalid username and/or password.
-          </Alert>
-          <Alert color="light" isOpen={this.state.isLoading}>
-            Verifying your login credentials, please wait...
-          </Alert>
           <Card id='login'>
             <CardBody>
               <div className='centered'><h4 className='text-danger'><img alt='IECLUBLOGO' src={iec} height='5%' width='5%' /> Inside The Club</h4></div>
               <h4 className='centered'>Sign In</h4>
+              <Alert color='danger' isOpen={this.state.visible} toggle={this.onDismiss}>
+                Invalid username and/or password.
+              </Alert>
+              <Alert color="light" isOpen={this.state.isLoading}>
+                Verifying your login credentials, please wait...
+              </Alert>
               <Form>
                 <FormGroup>
                   {/* <Label for="studNum">Student Number</Label> */}

@@ -17,7 +17,10 @@ class ViewReaffed extends Component {
       updateModal: false,
       dbDropdown: false,
       docsDropdown: false,
-      feeDropdown: false
+      feeDropdown: false,
+      participationDropdown: false,
+      jerseyDropdown: false,
+      contractDropdown: false
     };
   }
 
@@ -47,6 +50,14 @@ class ViewReaffed extends Component {
   toggleFee = () => {
     this.setState({feeDropdown: !this.state.feeDropdown});
   }
+  
+  toggleParticipation = () => {
+    this.setState({participationDropdown: !this.state.participationDropdown});
+  }
+
+  toggleJersey = () => {
+    this.setState({jerseyDropdown: !this.state.jerseyDropdown});
+  }
 
   getValue = (value, property) => {
     let selected = this.state.selected;
@@ -73,8 +84,11 @@ class ViewReaffed extends Component {
                 <th>Student Number</th>
                 <th>Last Name</th>
                 <th>Updated Database Info?</th>
+                <th>Read Contract?</th>
                 <th>Submitted Form 5 + ID?</th>
                 <th>Paid Reaff Fee?</th>
+                <th>Answered the EW Participation Survey?</th>
+                <th>Answered the EW Jersey/Tickets Survey?</th>
                 <th></th>
               </tr>
             </thead>
@@ -85,8 +99,11 @@ class ViewReaffed extends Component {
                     <td>{item.clubber}</td>
                     <td>{item.last_name}</td>
                     <td>{item.updated_db ? 'Yes' : 'No'}</td>
+                    <td>{item.read_contract ? 'Yes' : 'No'}</td>
                     <td>{item.submitted_docs ? 'Yes' : 'No'}</td>
                     <td>{item.paid_fee ? 'Yes' : 'No'}</td>
+                    <td>{item.ew_participation ? 'Yes' : 'No'}</td>
+                    <td>{item.ew_jersey ? 'Yes' : 'No'}</td>
                     <td><Button color='warning' onClick={() => this.toggleUpdateModal(item)}>Update</Button></td>
                   </tr>
                 )
@@ -96,14 +113,17 @@ class ViewReaffed extends Component {
           <Modal isOpen={this.state.updateModal} toggle={this.toggleUpdateModal} size='lg'>
             <ModalHeader toggle={this.toggleUpdateModal}>Update Details</ModalHeader>
             <ModalBody>
-              <Table>
+              <Table responsive>
                 <thead>
                   <tr>
                     <th>Student Number</th>
                     <th>Last Name</th>
                     <th>Updated Database Info?</th>
+                    <th>Read Contract?</th>
                     <th>Submitted Form 5 + ID?</th>
                     <th>Paid Reaff Fee?</th>
+                    <th>Answered the EW Participation Survey?</th>
+                    <th>Answered the EW Jersey/Tickets Survey?</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -118,6 +138,18 @@ class ViewReaffed extends Component {
                         <DropdownMenu>
                           {CHOICES.map((item, i) => {
                             return(<DropdownItem onClick={() => this.getValue(item.real, 'updated_db')}>{item.display}</DropdownItem>)
+                          })}
+                        </DropdownMenu>
+                      </ButtonDropdown>
+                    </td>
+                    <td>
+                      <ButtonDropdown isOpen={this.state.contractDropdown} toggle={this.toggleContract}>
+                        <DropdownToggle caret color='warning'>
+                          {this.state.selected.read_contract ? 'Yes' : 'No'}
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          {CHOICES.map((item, i) => {
+                            return(<DropdownItem onClick={() => this.getValue(item.real, 'read_contract')}>{item.display}</DropdownItem>)
                           })}
                         </DropdownMenu>
                       </ButtonDropdown>
@@ -142,6 +174,30 @@ class ViewReaffed extends Component {
                         <DropdownMenu>
                           {CHOICES.map((item, i) => {
                             return(<DropdownItem onClick={() => this.getValue(item.real, 'paid_fee')}>{item.display}</DropdownItem>)
+                          })}
+                        </DropdownMenu>
+                      </ButtonDropdown>
+                    </td>
+                    <td>
+                      <ButtonDropdown isOpen={this.state.participationDropdown} toggle={this.toggleParticipation}>
+                        <DropdownToggle caret color='warning'>
+                          {this.state.selected.ew_participation ? 'Yes' : 'No'}
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          {CHOICES.map((item, i) => {
+                            return(<DropdownItem onClick={() => this.getValue(item.real, 'ew_participation')}>{item.display}</DropdownItem>)
+                          })}
+                        </DropdownMenu>
+                      </ButtonDropdown>
+                    </td>
+                    <td>
+                      <ButtonDropdown isOpen={this.state.jerseyDropdown} toggle={this.toggleJersey}>
+                        <DropdownToggle caret color='warning'>
+                          {this.state.selected.ew_jersey ? 'Yes' : 'No'}
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          {CHOICES.map((item, i) => {
+                            return(<DropdownItem onClick={() => this.getValue(item.real, 'ew_jersey')}>{item.display}</DropdownItem>)
                           })}
                         </DropdownMenu>
                       </ButtonDropdown>
