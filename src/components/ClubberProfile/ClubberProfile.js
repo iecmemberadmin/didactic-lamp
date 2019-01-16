@@ -221,7 +221,7 @@ class ClubberProfile extends Component {
                 </li>
               </ul>
               <br />
-              <p>By clicking the submit button, I am confirming that I have read and understood the contract.</p>
+              <p>By clicking the submit button, I am confirming that I have read and understood the contract, and I give consent to have my basic information and contact details available in the directory.</p>
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" onClick={this.goBackToInfo}>Back</Button>{' '}
