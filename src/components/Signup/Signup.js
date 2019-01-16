@@ -178,8 +178,8 @@ class Signup extends Component {
           <h5>Login Credentials</h5>
           <Form>
             <FormGroup>
-              <Label>Student Number</Label>
-              <Input type='text' name='student_number' onChange={this.onChange} value={this.state.student_number}/>
+              <Label>Student Number (without dash)</Label>
+              <Input type='text' name='student_number' placeholder='201XXXXXX' onChange={this.onChange} value={this.state.student_number}/>
             </FormGroup>
             <FormGroup>
               <Label>Password</Label>
