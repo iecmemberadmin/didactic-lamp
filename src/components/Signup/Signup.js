@@ -226,8 +226,8 @@ class Signup extends Component {
           <Row>
             <Col>
               <FormGroup>
-                <Label>Birthday</Label>
-                <Input type='text' name='birthday' placeholder='FORMAT: YYYY-MM-DD' onChange={this.onChange} value={this.state.birthday}/>
+                <Label>Birthday (Format: YYYY-MM-DD)</Label>
+                <Input type='text' name='birthday' onChange={this.onChange} value={this.state.birthday}/>
               </FormGroup>
             </Col>
             <Col>
