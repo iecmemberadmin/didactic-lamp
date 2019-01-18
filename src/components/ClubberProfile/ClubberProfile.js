@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavMenu from '../NavMenu/NavMenu';
-import {Container, Table, Card, CardBody, CardTitle, CardSubtitle, CardText, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input} from 'reactstrap';
+import {Container, Table, Card, CardBody, CardTitle, CardSubtitle, CardText, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert} from 'reactstrap';
 import axios from 'axios';
 
 class ClubberProfile extends Component {
@@ -12,9 +12,12 @@ class ClubberProfile extends Component {
       reaffModal: false,
       contractModal: false,
       reaffDetailsModal: false,
+      passwordModal: false,
       isReaffActive: false,
       isReaffed: false,
-      reaffDetails: {}
+      reaffDetails: {},
+      unequalAlert: false,
+      successPasswordAlert: false
     }
   }
 
@@ -58,6 +61,10 @@ class ClubberProfile extends Component {
 
   toggleReaffDetailsModal = () => {
     this.setState({reaffDetailsModal: !this.state.reaffDetailsModal});
+  }
+
+  togglePasswordModal = () => {
+    this.setState({passwordModal: !this.state.passwordModal});
   }
 
   submitReaff = () => {
@@ -105,6 +112,29 @@ class ClubberProfile extends Component {
     this.setState({reaffModal: true, contractModal: false});
   }
 
+  dismissUnequalAlert = () => {
+    this.setState({unequalAlert: false});
+  }
+
+  dismissSuccessPasswordAlert = () => {
+    this.setState({successPasswordAlert: false});
+  }
+
+  changePassword = () => {
+    this.setState({unequalAlert: false});
+    if(this.state.activeClubber.newPassword !== this.state.activeClubber.confirmNewPassword) {
+      this.setState({unequalAlert: true});
+    }else {
+      axios.put(`https://clubberdb-api.herokuapp.com/auth/${this.state.activeClubber.student_number}/`, {
+        'clubber': this.state.activeClubber.student_number,
+        'password': this.state.activeClubber.newPassword
+      }).then(response => {
+        this.setState({passwordModal: false, successPasswordAlert: true});
+        console.log(response);
+      })
+    }
+  }
+
   render() {
     return(
       <div>
@@ -113,6 +143,9 @@ class ClubberProfile extends Component {
           {this.state.activeClubber !== {} && <Card>
             <CardBody>
               <h3 className='centered' style={{color: 'red'}}>Clubber Profile</h3>
+              <Alert color="success" isOpen={this.state.successPasswordAlert} toggle={this.dismissSuccessPasswordAlert}>
+                Successfully changed password.
+              </Alert>
               <CardTitle><h4>{this.state.activeClubber.first_name} {this.state.activeClubber.last_name}</h4></CardTitle>
               <CardSubtitle>{this.state.activeClubber.student_number} <br/> {this.state.activeClubber.degree_program}</CardSubtitle>
               <br/>
@@ -127,6 +160,8 @@ class ClubberProfile extends Component {
                 {this.state.activeClubber.present_address}
               </CardText>
               <Button color='danger' onClick={this.toggleDetailsModal}>View Full Details</Button>
+              {' '}
+              <Button color='warning' onClick={this.togglePasswordModal}>Change Password</Button>
               <br/>
               <br/>
               {this.state.isReaffActive && !this.state.isReaffed &&
@@ -144,6 +179,23 @@ class ClubberProfile extends Component {
             </CardBody>
           </Card>}
           <br/>
+          <Modal isOpen={this.state.passwordModal} toggle={this.togglePasswordModal} size='lg'>
+            <ModalHeader toggle={this.state.passwordModal}>Change Password</ModalHeader>
+            <ModalBody>
+              <Alert color="danger" isOpen={this.state.unequalAlert} toggle={this.dismissUnequalAlert}>
+                Passwords do not match.
+              </Alert>
+              <FormGroup>
+                <Label>New Password</Label>
+                <Input type='password' name='newPassword' onChange={this.onChange} value={this.state.activeClubber.newPassword}/>
+              </FormGroup>
+              <FormGroup>
+                <Label>Confirm New Password</Label>
+                <Input type='password' name='confirmNewPassword' onChange={this.onChange} value={this.state.activeClubber.confirmNewPassword}/>
+              </FormGroup>
+              <Button color='success' onClick={this.changePassword}>Confirm</Button>
+            </ModalBody>
+          </Modal>
           <Modal isOpen={this.state.reaffDetailsModal} toggle={this.toggleReaffDetailsModal} size='lg'>
             <ModalHeader toggle={this.toggleReaffDetailsModal}>Your Reaff Progress</ModalHeader>
             <ModalBody>
