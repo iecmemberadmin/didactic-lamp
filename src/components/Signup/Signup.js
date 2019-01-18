@@ -223,13 +223,11 @@ class Signup extends Component {
               </FormGroup>
             </Col>
           </Row>
+          <FormGroup>
+            <Label>Birthday (Format: YYYY-MM-DD)</Label>
+            <Input type='text' name='birthday' onChange={this.onChange} value={this.state.birthday}/>
+          </FormGroup>
           <Row>
-            <Col>
-              <FormGroup>
-                <Label>Birthday (Format: YYYY-MM-DD)</Label>
-                <Input type='text' name='birthday' onChange={this.onChange} value={this.state.birthday}/>
-              </FormGroup>
-            </Col>
             <Col>
               <FormGroup>
                 <Label>Email Address</Label>
