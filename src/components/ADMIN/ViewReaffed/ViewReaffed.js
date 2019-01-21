@@ -78,6 +78,7 @@ class ViewReaffed extends Component {
         <NavMenu/>
         <Container>
           <h3>Reaffed Clubbers</h3>
+          <h6>Total Reaffed (Updated DB info and Read Contract): {this.state.reaffed.length}</h6>
           <Table>
             <thead>
               <tr>

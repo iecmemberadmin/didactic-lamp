@@ -287,6 +287,7 @@ class ViewRegistered extends Component {
           </Alert>
           :
           <div>
+            <h6>Total Registered: {this.state.clubbers.length}</h6>
             <FormGroup>
               <Input type='text' name='search_query' placeholder='Search Clubbers' onChange={this.search} value={this.state.search_query}/>
             </FormGroup>
