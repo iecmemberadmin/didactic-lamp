@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import NavMenu from '../NavMenu/NavMenu';
-import {Container, Row, Col, Button} from 'reactstrap';
+import {Container, Row, Col, Button, Card, CardBody, CardTitle, CardText} from 'reactstrap';
 import axios from 'axios';
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      details: {}
+      details: {},
+      isReaffActive: false,
+      isReaffed: false
     }
   }
 
@@ -17,6 +19,21 @@ class Dashboard extends Component {
     .then(response => {
       this.setState({details: response.data});
       console.log(response.data);
+    });
+    axios.get('https://clubberdb-api.herokuapp.com/proc/reaff/')
+    .then(response => {
+      if(response.status === 200) {
+        if(response.data.active === true) {
+          this.setState({isReaffActive: true});
+        }
+      }
+    }); 
+    axios.get(`https://clubberdb-api.herokuapp.com/reaff/${localStorage.getItem('student_number')}/`)
+    .then(response => {
+      //console.log(response.status);
+      if(response.status === 200) {
+        this.setState({isReaffed: true, reaffDetails: response.data});
+      }
     });
   }
 
@@ -31,7 +48,21 @@ class Dashboard extends Component {
           </Row>
           <br/>
           <br/>
-          <p>This site is still a work in progress, but please stay tuned for the upcoming features we have in store for you! <br/><i>- Member Administration Team</i></p>
+          {this.state.isReaffActive &&
+          <Card>
+            <CardBody>
+              <CardTitle>Reaff for this semester is now open!</CardTitle>
+              <CardText><a href='/profile'>Click here to reaff.</a></CardText>
+            </CardBody>
+          </Card>}
+          <br/>
+          <Card>
+            <CardBody>
+              <CardText>
+                This site is still a work in progress, but please stay tuned for the upcoming features we have in store for you! <br/><i>- Member Administration Team</i>
+              </CardText>
+            </CardBody>
+          </Card>
         </Container>
       </div>
     );  

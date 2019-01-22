@@ -1,12 +1,37 @@
 import React, {Component} from 'react';
 import NavMenu from '../NavMenu/NavMenu';
-import {Container, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Alert} from 'reactstrap';
+import {Container, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Alert, Label, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import axios from 'axios';
+
+let COMMITTEES = [
+  'Executive', 
+  'Academics',
+  'Externals',
+  'Extracurricular',
+  'Finance',
+  'Internals',
+  'Membership',
+  'Publicity',
+  'TBA'
+]
+
+let POSITIONS = [
+  'President',
+  'Vice President',
+  'Executive Secretary',
+  'Associate Secretary',
+  'Director',
+  'Project Manager',
+  'Member',
+  'TBA'
+]
 
 class ViewRegistered extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      committeeDropdown: false,
+      positionsDropdown: false,
       clubbers: [],
       search: [],
       detailsModal: false,
@@ -14,7 +39,9 @@ class ViewRegistered extends Component {
       editMode: false,
       search_query: '',
       tempEdit: {},
-      loadingAlert: false
+      loadingAlert: false,
+      resetLoadingAlert: false,
+      resetSuccessAlert: false
     };
   }
 
@@ -24,6 +51,26 @@ class ViewRegistered extends Component {
 
   toggle = () => {
     this.setState({detailsModal: false});
+  }
+
+  toggleCommittee = () => {
+    this.setState({committeeDropdown: !this.state.committeeDropdown});
+  }
+
+  togglePositions = () => {
+    this.setState({positionsDropdown: !this.state.positionsDropdown});
+  }
+
+  getCommittee = (committee) => {
+    let activeClubber = this.state.activeClubber;
+    activeClubber.committee = committee;
+    this.setState({activeClubber: activeClubber});
+  }
+
+  getPosition = (position) => {
+    let activeClubber = this.state.activeClubber;
+    activeClubber.position = position;
+    this.setState({activeClubber: activeClubber});
   }
 
   deleteClubber = (activeClubber) => {
@@ -76,10 +123,11 @@ class ViewRegistered extends Component {
         let last_name = item.last_name.toLowerCase();
         let first_name = item.first_name.toLowerCase();
         let middle_name = item.middle_name.toLowerCase();
+        let nick_name = item.nick_name.toLowerCase();
         let student_number = item.student_number;
         query = query.toLowerCase();
         
-        return (last_name.includes(query) || first_name.includes(query) || middle_name.includes(query) || student_number.includes(query));
+        return (last_name.includes(query) || first_name.includes(query) || middle_name.includes(query) || student_number.includes(query) || nick_name.includes(query));
       })});
     }
   }
@@ -95,6 +143,48 @@ class ViewRegistered extends Component {
     }
   }
 
+  resetPassword = () => {
+    this.setState({resetLoadingAlert: true});
+    axios.put(`https://clubberdb-api.herokuapp.com/auth/${this.state.activeClubber.student_number}/`, {
+      clubber: this.state.activeClubber.student_number,
+      password: this.state.activeClubber.student_number
+    }).then(response => {
+      this.setState({resetLoadingAlert: false, resetSuccessAlert: true});
+    })
+  }
+
+  dismissResetSuccessAlert = () => {
+    this.setState({resetSuccessAlert: false});
+  }
+
+  sortList = (parameter) => {
+    let newList = this.state.search.slice();
+    switch(parameter) {
+      case 'student_number':
+        this.setState({search: newList.sort((a, b) => {
+          return a.student_number - b.student_number;
+        })});
+        break;
+      case 'last_name':
+        this.setState({search: newList.sort((a,b) =>  {
+          return a.last_name.localeCompare(b.last_name);
+        })});
+        break;
+      case 'first_name':
+        this.setState({search: newList.sort((a,b) =>  {
+          return a.first_name.localeCompare(b.first_name);
+        })});
+        break;
+    }
+  }
+
+  updateClubber = () => {
+    axios.put(`https://clubberdb-api.herokuapp.com/clubbers/${this.state.activeClubber.student_number}/`, this.state.activeClubber)
+    .then(response => {
+      window.location.reload();
+    });
+  }
+
   render() {
     return(
       <div>
@@ -104,7 +194,15 @@ class ViewRegistered extends Component {
           <Modal isOpen={this.state.detailsModal} toggle={this.toggle} size='lg'>
             <ModalHeader toggle={this.toggle}><h4 style={{color: 'red'}}>Clubber Details: {this.state.activeClubber.nick_name} {this.state.activeClubber.last_name}</h4></ModalHeader>
             <ModalBody>
+              <Alert color='secondary' isOpen={this.state.resetLoadingAlert}>
+                Resetting password ... 
+              </Alert>
+              <Alert color='success' isOpen={this.state.resetSuccessAlert} toggle={this.dismissResetSuccessAlert}>
+                Password has been reset.
+              </Alert>
               <Button color='danger' onClick={() => this.deleteClubber(this.state.activeClubber)}>Delete Clubber</Button>{' '}{this.state.editMode ? <Button color='secondary' onClick={this.toggleEditMode}>Cancel</Button> : <Button color='warning' onClick={this.toggleEditMode}>Edit Info</Button>}
+              {' '}
+              <Button color='warning' onClick={this.resetPassword}>Reset Password</Button>
               <br />
               <br />
               <Table>
@@ -218,11 +316,45 @@ class ViewRegistered extends Component {
                 <tbody>
                   <tr>
                     <th>Committee</th>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <ButtonDropdown isOpen={this.state.committeeDropdown} toggle={this.toggleCommittee}>
+                          <DropdownToggle caret color='info'>
+                            {this.state.activeClubber.committee === 'TBA' ? 'Select Committee' : this.state.activeClubber.committee}
+                          </DropdownToggle>
+                          <DropdownMenu>
+                            {COMMITTEES.map((item, i) => {
+                              return(<DropdownItem onClick={() => this.getCommittee(item)}>{item}</DropdownItem>)
+                            })}
+                          </DropdownMenu>
+                        </ButtonDropdown>
+                      </FormGroup>
+                    </td>
+                    :
                     <td>{this.state.activeClubber.committee}</td>
+                    }
                   </tr>
                   <tr>
                     <th>Position</th>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <ButtonDropdown isOpen={this.state.positionsDropdown} toggle={this.togglePositions}>
+                          <DropdownToggle caret color='info'>
+                          {this.state.activeClubber.position === 'TBA' ? 'Select Position' : this.state.activeClubber.position}
+                          </DropdownToggle>
+                          <DropdownMenu>
+                            {POSITIONS.map((item, i) => {
+                              return(<DropdownItem onClick={() => this.getPosition(item)}>{item}</DropdownItem>)
+                            })}
+                          </DropdownMenu>
+                        </ButtonDropdown>
+                      </FormGroup>
+                    </td>
+                    :
                     <td>{this.state.activeClubber.position}</td>
+                    }
                   </tr>
                   <tr>
                     <th>Project</th>
@@ -278,7 +410,7 @@ class ViewRegistered extends Component {
               </Table>
             </ModalBody>
             <ModalFooter>
-              {this.state.editMode ? <Button color='success'>Update Info</Button> : ''}{' '}<Button color="primary" onClick={this.toggle}>Exit</Button>
+              {this.state.editMode ? <Button color='success' onClick={this.updateClubber}>Update Info</Button> : ''}{' '}<Button color="primary" onClick={this.toggle}>Exit</Button>
             </ModalFooter>
           </Modal>
           {this.state.loadingAlert ? 
@@ -294,9 +426,9 @@ class ViewRegistered extends Component {
             <Table striped hover responsive> 
               <thead>
                 <tr>
-                  <th>Student Number</th>
-                  <th>Last Name</th>
-                  <th>First Name</th>
+                  <th><Button onClick={() => this.sortList('student_number')}>Student Number</Button></th>
+                  <th><Button onClick={() => this.sortList('last_name')}>Last Name</Button></th>
+                  <th><Button onClick={() => this.sortList('first_name')}>First Name</Button></th>
                   <th>Committee</th>
                   <th>Position</th>
                   <th>Project</th>

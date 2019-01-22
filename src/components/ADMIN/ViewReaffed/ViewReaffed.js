@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import NavMenu from '../NavMenu/NavMenu';
-import {Container, Table, Button, Modal, ModalBody, ModalFooter, ModalHeader, ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
+import {Container, Table, Button, Modal, ModalBody, ModalFooter, ModalHeader, ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input} from 'reactstrap';
 
 let CHOICES = [
   {real: true, display: 'Yes'},
@@ -14,20 +14,22 @@ class ViewReaffed extends Component {
     this.state = {
       reaffed: [],
       selected: {},
+      search: [],
       updateModal: false,
       dbDropdown: false,
       docsDropdown: false,
       feeDropdown: false,
       participationDropdown: false,
       jerseyDropdown: false,
-      contractDropdown: false
+      contractDropdown: false,
+      search_query: ''
     };
   }
 
   componentWillMount() {
     axios.get('https://clubberdb-api.herokuapp.com/reaff/')
     .then(response => {
-      this.setState({reaffed: response.data});
+      this.setState({reaffed: response.data, search: response.data});
     });
   }
 
@@ -72,6 +74,24 @@ class ViewReaffed extends Component {
     });
   }
 
+  search = (event) => {
+    let query = event.target.value;
+    this.setState({search_query: query});
+    let filteredList = [];
+
+    if(query === '') {
+      this.setState({search: this.state.reaffed});
+    }else {
+      this.setState({search: this.state.reaffed.filter(item => {
+        let last_name = item.last_name.toLowerCase();
+        let student_number = item.clubber;
+        query = query.toLowerCase();
+        
+        return (last_name.includes(query) || student_number.includes(query));
+      })});
+    }
+  }
+
   render() {
     return(
       <div>
@@ -79,6 +99,9 @@ class ViewReaffed extends Component {
         <Container>
           <h3>Reaffed Clubbers</h3>
           <h6>Total Reaffed (Updated DB info and Read Contract): {this.state.reaffed.length}</h6>
+          <FormGroup>
+            <Input type='text' name='search_query' placeholder='Search Clubbers' onChange={this.search} value={this.state.search_query}/>
+          </FormGroup>
           <Table>
             <thead>
               <tr>
@@ -94,7 +117,7 @@ class ViewReaffed extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.reaffed.map((item, i) => {
+              {this.state.search.map((item, i) => {
                 return(
                   <tr>
                     <td>{item.clubber}</td>

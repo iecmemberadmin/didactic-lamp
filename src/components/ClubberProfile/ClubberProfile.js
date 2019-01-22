@@ -167,10 +167,10 @@ class ClubberProfile extends Component {
               {this.state.isReaffActive && !this.state.isReaffed &&
               <div>
                 Reaff for this semester is now open!
-                <Button color='link' onClick={this.toggleReaffModal}>Click here for more details.</Button>
+                <Button color='link' onClick={this.toggleReaffModal}>Click here to Reaff.</Button>
               </div>
               }
-              {this.state.isReaffActive && this.state.isReaffed &&
+              {this.state.isReaffed &&
               <div>
                 Thank you for submitting your application for this sem's Reaff!<br/>
                 <Button color='link' onClick={this.toggleReaffDetailsModal}>Click here to view your progress in the Reaff requirements.</Button>
