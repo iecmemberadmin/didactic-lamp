@@ -17,7 +17,9 @@ class ClubberProfile extends Component {
       isReaffed: false,
       reaffDetails: {},
       unequalAlert: false,
-      successPasswordAlert: false
+      successPasswordAlert: false,
+      successInfoAlert: false,
+      editMode: false
     }
   }
 
@@ -48,7 +50,11 @@ class ClubberProfile extends Component {
   }
 
   toggleDetailsModal = () => {
-    this.setState({detailsModal: !this.state.detailsModal});
+    if(this.state.detailsModal) {
+      window.location.reload();
+    }else {
+      this.setState({detailsModal: !this.state.detailsModal});
+    }
   }
 
   toggleReaffModal = () => {
@@ -65,6 +71,17 @@ class ClubberProfile extends Component {
 
   togglePasswordModal = () => {
     this.setState({passwordModal: !this.state.passwordModal});
+  }
+
+  toggleEditMode = () => {
+    if(this.state.editMode) {
+      let temp = JSON.parse(JSON.stringify(this.state.tempEdit));
+      this.setState({editMode: false});
+      this.setState({activeClubber: temp});
+    }else {
+      let temp = JSON.parse(JSON.stringify(this.state.activeClubber));
+      this.setState({editMode: true, tempEdit: temp});
+    }
   }
 
   submitReaff = () => {
@@ -90,6 +107,14 @@ class ClubberProfile extends Component {
       });
     }).catch(error => {
       
+    });
+  }
+
+  updateInfo = () => {
+    axios.put(`https://clubberdb-api.herokuapp.com/clubbers/${localStorage.getItem('student_number')}/`, this.state.activeClubber)
+    .then(response => {
+      console.log(response);
+      this.setState({successInfoAlert: true, detailsModal: false});
     });
   }
 
@@ -120,6 +145,10 @@ class ClubberProfile extends Component {
   dismissSuccessPasswordAlert = () => {
     this.setState({successPasswordAlert: false});
   }
+  
+  dismissSuccessInfoAlert = () => {
+    this.setState({successInfoAlert: false});
+  }
 
   changePassword = () => {
     this.setState({unequalAlert: false});
@@ -146,6 +175,9 @@ class ClubberProfile extends Component {
               <h3 className='centered' style={{color: 'red'}}>Clubber Profile</h3>
               <Alert color="success" isOpen={this.state.successPasswordAlert} toggle={this.dismissSuccessPasswordAlert}>
                 Successfully changed password.
+              </Alert>
+              <Alert color="success" isOpen={this.state.successInfoAlert} toggle={this.dismissSuccessInfoAlert}>
+                Successfully updated profile.
               </Alert>
               <CardTitle><h4>{this.state.activeClubber.first_name} {this.state.activeClubber.last_name}</h4></CardTitle>
               <CardSubtitle>{this.state.activeClubber.student_number} <br/> {this.state.activeClubber.degree_program}</CardSubtitle>
@@ -508,6 +540,9 @@ class ClubberProfile extends Component {
           <Modal isOpen={this.state.detailsModal} toggle={this.toggleDetailsModal} size='lg'>
             <ModalHeader toggle={this.toggleDetailsModal}>Clubber Profile</ModalHeader>
             <ModalBody>
+              {this.state.editMode ? <Button color='secondary' onClick={this.toggleEditMode}>Cancel</Button> : <Button color='warning' onClick={this.toggleEditMode}>Edit Info</Button>}
+              <br/>
+              <br/>
               <Table responsive>
                 <thead>
                   <tr><i><h5>Personal Information</h5></i></tr>
@@ -515,27 +550,74 @@ class ClubberProfile extends Component {
                 <tbody>
                   <tr>
                     <th>First Name</th>
-                    <td>{this.state.activeClubber.first_name}</td>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='first_name' onChange={this.onChange} value={this.state.activeClubber.first_name}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.first_name}</td>}
+                  </tr>
+                  <tr>
+                    <th>Nick Name</th>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='nick_name' onChange={this.onChange} value={this.state.activeClubber.nick_name}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.nick_name}</td>}
                   </tr>
                   <tr>
                     <th>Middle Name</th>
-                    <td>{this.state.activeClubber.middle_name}</td>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='middle_name' onChange={this.onChange} value={this.state.activeClubber.middle_name}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.middle_name}</td>}
                   </tr>
                   <tr>
                     <th>Last Name</th>
-                    <td>{this.state.activeClubber.last_name}</td>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='last_name' onChange={this.onChange} value={this.state.activeClubber.last_name}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.last_name}</td>}
                   </tr>
                   <tr>
                     <th>Student Number</th>
                     <td>{this.state.activeClubber.student_number}</td>
                   </tr>
                   <tr>
-                    <th>Birthday</th>
-                    <td>{this.state.activeClubber.birthday}</td>
+                    <th>Birthday {this.state.editMode ? 
+                    '(Format: YYYY-MM-DD)' : ''}</th>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='birthday' onChange={this.onChange} value={this.state.activeClubber.birthday}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.birthday}</td>}
                   </tr>
                   <tr>
                     <th>Degree Program</th>
-                    <td>{this.state.activeClubber.degree_program}</td>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='degree_program' onChange={this.onChange} value={this.state.activeClubber.degree_program}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.degree_program}</td>}
                   </tr>
                 </tbody>
                 <br />
@@ -545,15 +627,36 @@ class ClubberProfile extends Component {
                 <tbody>
                   <tr>
                     <th>Mobile Number</th>
-                    <td>{this.state.activeClubber.mobile_number}</td>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='mobile_number' onChange={this.onChange} value={this.state.activeClubber.mobile_number}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.mobile_number}</td>}
                   </tr>
                   <tr>
                     <th>Email Address</th>
-                    <td>{this.state.activeClubber.email_address}</td>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='email_address' onChange={this.onChange} value={this.state.activeClubber.email_address}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.email_address}</td>}
                   </tr>
                   <tr>
                     <th>Present Address</th>
-                    <td>{this.state.activeClubber.present_address}</td>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='present_address' onChange={this.onChange} value={this.state.activeClubber.present_address}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.present_address}</td>}
                   </tr>
                 </tbody>
                 <br />
@@ -581,20 +684,42 @@ class ClubberProfile extends Component {
                 <tbody>
                   <tr>
                     <th>Contact Person</th>
-                    <td>{this.state.activeClubber.emergency_name}</td>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='emergency_name' onChange={this.onChange} value={this.state.activeClubber.emergency_name}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.emergency_name}</td>}
                   </tr>
                   <tr>
                     <th>Relationship</th>
-                    <td>{this.state.activeClubber.emergency_relationship}</td>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='emergency_relationship' onChange={this.onChange} value={this.state.activeClubber.emergency_relationship}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.emergency_relationship}</td>}
                   </tr>
                   <tr>
                     <th>Contact Number</th>
-                    <td>{this.state.activeClubber.emergency_contact}</td>
+                    {this.state.editMode ?
+                    <td>
+                      <FormGroup>
+                        <Input type='text' name='emergency_contact' onChange={this.onChange} value={this.state.activeClubber.emergency_contact}/>
+                      </FormGroup>
+                    </td>
+                    :
+                    <td>{this.state.activeClubber.emergency_contact}</td>}
                   </tr>
                 </tbody>
               </Table>
             </ModalBody>
             <ModalFooter>
+              {this.state.editMode ? <Button color='warning' onClick={this.updateInfo}>Submit Changes</Button> : ' '}
               <Button color="success" onClick={this.toggleDetailsModal}>Done</Button>
             </ModalFooter>
           </Modal>
