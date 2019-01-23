@@ -175,6 +175,21 @@ class ViewRegistered extends Component {
           return a.first_name.localeCompare(b.first_name);
         })});
         break;
+      case 'committee':
+        this.setState({search: newList.sort((a,b) =>  {
+          return a.committee.localeCompare(b.committee);
+        })});
+        break;
+      case 'position':
+        this.setState({search: newList.sort((a,b) =>  {
+          return a.position.localeCompare(b.position);
+        })});
+        break;
+      case 'project':
+        this.setState({search: newList.sort((a,b) =>  {
+          return a.project.localeCompare(b.project);
+        })});
+        break;
     }
   }
 
@@ -429,9 +444,9 @@ class ViewRegistered extends Component {
                   <th><Button onClick={() => this.sortList('student_number')}>Student Number</Button></th>
                   <th><Button onClick={() => this.sortList('last_name')}>Last Name</Button></th>
                   <th><Button onClick={() => this.sortList('first_name')}>First Name</Button></th>
-                  <th>Committee</th>
-                  <th>Position</th>
-                  <th>Project</th>
+                  <th><Button onClick={() => this.sortList('committee')}>Committee</Button></th>
+                  <th><Button onClick={() => this.sortList('position')}>Position</Button></th>
+                  <th><Button onClick={() => this.sortList('project')}>Project</Button></th>
                   <th>Details</th>
                 </tr>
               </thead>

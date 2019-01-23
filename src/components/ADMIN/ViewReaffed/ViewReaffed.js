@@ -8,6 +8,8 @@ let CHOICES = [
   {real: false, display: 'No'}
 ]
 
+let PROGRESS = 0;
+
 class ViewReaffed extends Component {
   constructor(props) {
     super(props);
@@ -94,6 +96,19 @@ class ViewReaffed extends Component {
     }
   }
 
+  setNickname = () => {
+    this.state.reaffed.map((item, i) => {
+      axios.get(`https://clubberdb-api.herokuapp.com/clubbers/${item.clubber}/`)
+      .then(response => {
+        item.nick_name = response.data.nick_name;
+        axios.put(`https://clubberdb-api.herokuapp.com/reaff/${item.clubber}/`, item)
+        .then(response => {
+          PROGRESS += 1;
+        });
+      })
+    });
+  }
+
   render() {
     return(
       <div>
@@ -107,6 +122,9 @@ class ViewReaffed extends Component {
           :
           <div>
           <h6>Total Reaffed (Updated DB info and Read Contract): {this.state.reaffed.length}</h6>
+          {PROGRESS}/{this.state.reaffed.length}
+          <br/>
+          <Button onClick={this.setNickname}>Set Nickname</Button>
           <FormGroup>
             <Input type='text' name='search_query' placeholder='Search Clubbers' onChange={this.search} value={this.state.search_query}/>
           </FormGroup>
@@ -114,6 +132,7 @@ class ViewReaffed extends Component {
             <thead>
               <tr>
                 <th>Student Number</th>
+                <th>Nickname</th>
                 <th>Last Name</th>
                 <th>Updated Database Info?</th>
                 <th>Read Contract?</th>
@@ -129,6 +148,7 @@ class ViewReaffed extends Component {
                 return(
                   <tr>
                     <td>{item.clubber}</td>
+                    <td>{item.nick_name}</td>
                     <td>{item.last_name}</td>
                     <td>{item.updated_db ? 'Yes' : 'No'}</td>
                     <td>{item.read_contract ? 'Yes' : 'No'}</td>

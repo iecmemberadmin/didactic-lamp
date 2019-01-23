@@ -79,7 +79,8 @@ class ClubberProfile extends Component {
         'submitted_docs': false,
         'paid_fee': false,
         'ew_participation': false,
-        'ew_jersey': false
+        'ew_jersey': false,
+        'nick_name': this.state.activeClubber.nick_name
       })
       .then(response => {
         console.log(response);
