@@ -1,20 +1,22 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Container, Table, Button} from 'reactstrap';
+import {Container, Table, Button, Alert} from 'reactstrap';
 import NavMenu from '../NavMenu/NavMenu';
 
 class ConfirmPending extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pending: []
+      pending: [],
+      loadingAlert: false
     }
   }
 
   componentWillMount() {
+    this.setState({loadingAlert: true});
     axios.get('https://clubberdb-api.herokuapp.com/pending/')
     .then(response => {
-      this.setState({pending: response.data});
+      this.setState({pending: response.data, loadingAlert: false});
     })
   }
 
@@ -71,6 +73,16 @@ class ConfirmPending extends Component {
         <NavMenu />
         <Container>
           <h3>Pending Signup Requests</h3>
+          {this.state.loadingAlert ?
+          <Alert color="light" isOpen={this.state.loadingAlert}>
+            <p className='centered'>Loading data, please wait ... </p>
+          </Alert>
+          :
+          this.state.pending.length === 0 ?
+          <Alert color="light" isOpen={this.state.pending.length === 0}>
+            <p className='centered'>No pending signup requests. </p>
+          </Alert>
+          :
           <Table>
             <thead>
               <tr>
@@ -96,7 +108,7 @@ class ConfirmPending extends Component {
                 )
               })}
             </tbody>
-          </Table>
+          </Table>}
         </Container>
       </div>
     );

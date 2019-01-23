@@ -85,7 +85,7 @@ class Login extends Component {
                   {/* <Label for="password">Password</Label> */}
                   <Input type="password" name="password" id="password" onChange={this.onChange} placeholder='Password' />
                 </FormGroup>
-                <Button color='link' href='/signup'>Don't have an account? Sign up here.</Button>
+                <a href='/signup'>Don't have an account? Sign up here.</a>
                 <div className='centered'><Button outline color='danger' onClick={this.logIn}>Login</Button></div>
               </Form>
             </CardBody>

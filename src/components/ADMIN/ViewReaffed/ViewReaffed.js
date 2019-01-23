@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import NavMenu from '../NavMenu/NavMenu';
-import {Container, Table, Button, Modal, ModalBody, ModalFooter, ModalHeader, ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input} from 'reactstrap';
+import {Container, Table, Button, Modal, ModalBody, ModalFooter, ModalHeader, ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Alert} from 'reactstrap';
 
 let CHOICES = [
   {real: true, display: 'Yes'},
@@ -22,14 +22,16 @@ class ViewReaffed extends Component {
       participationDropdown: false,
       jerseyDropdown: false,
       contractDropdown: false,
-      search_query: ''
+      search_query: '',
+      loadingAlert: false
     };
   }
 
   componentWillMount() {
+    this.setState({loadingAlert: true});
     axios.get('https://clubberdb-api.herokuapp.com/reaff/')
     .then(response => {
-      this.setState({reaffed: response.data, search: response.data});
+      this.setState({reaffed: response.data, search: response.data, loadingAlert: false});
     });
   }
 
@@ -98,6 +100,12 @@ class ViewReaffed extends Component {
         <NavMenu/>
         <Container>
           <h3>Reaffed Clubbers</h3>
+          {this.state.loadingAlert ? 
+          <Alert color="light" isOpen={this.state.loadingAlert}>
+            <p className='centered'>Loading data, please wait ... </p>
+          </Alert>
+          :
+          <div>
           <h6>Total Reaffed (Updated DB info and Read Contract): {this.state.reaffed.length}</h6>
           <FormGroup>
             <Input type='text' name='search_query' placeholder='Search Clubbers' onChange={this.search} value={this.state.search_query}/>
@@ -134,6 +142,7 @@ class ViewReaffed extends Component {
               })}
             </tbody>
           </Table>
+          </div>}
           <Modal isOpen={this.state.updateModal} toggle={this.toggleUpdateModal} size='lg'>
             <ModalHeader toggle={this.toggleUpdateModal}>Update Details</ModalHeader>
             <ModalBody>
