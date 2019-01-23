@@ -122,9 +122,9 @@ class ViewReaffed extends Component {
           :
           <div>
           <h6>Total Reaffed (Updated DB info and Read Contract): {this.state.reaffed.length}</h6>
-          {PROGRESS}/{this.state.reaffed.length}
-          <br/>
-          <Button onClick={this.setNickname}>Set Nickname</Button>
+          {/*{PROGRESS}/{this.state.reaffed.length}
+           <br/>
+          <Button onClick={this.setNickname}>Set Nickname</Button> */}
           <FormGroup>
             <Input type='text' name='search_query' placeholder='Search Clubbers' onChange={this.search} value={this.state.search_query}/>
           </FormGroup>
