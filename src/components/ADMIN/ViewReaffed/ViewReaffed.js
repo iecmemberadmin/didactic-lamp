@@ -128,7 +128,7 @@ class ViewReaffed extends Component {
           <FormGroup>
             <Input type='text' name='search_query' placeholder='Search Clubbers' onChange={this.search} value={this.state.search_query}/>
           </FormGroup>
-          <Table>
+          <Table responsive>
             <thead>
               <tr>
                 <th>Student Number</th>

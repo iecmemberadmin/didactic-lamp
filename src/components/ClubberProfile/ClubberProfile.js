@@ -200,7 +200,7 @@ class ClubberProfile extends Component {
           <Modal isOpen={this.state.reaffDetailsModal} toggle={this.toggleReaffDetailsModal} size='lg'>
             <ModalHeader toggle={this.toggleReaffDetailsModal}>Your Reaff Progress</ModalHeader>
             <ModalBody>
-              <Table>
+              <Table responsive>
                 <thead>
                   <tr>
                     <th>Student Number</th>
@@ -289,7 +289,7 @@ class ClubberProfile extends Component {
             For uneditable information, contact the Member Administration Team to give the necessary edits for the said information.             
             <br/>
             <br/>
-            <Table>
+            <Table responsive>
                 <thead>
                   <tr><i><h5>Personal Information</h5></i></tr>
                 </thead>
@@ -508,7 +508,7 @@ class ClubberProfile extends Component {
           <Modal isOpen={this.state.detailsModal} toggle={this.toggleDetailsModal} size='lg'>
             <ModalHeader toggle={this.toggleDetailsModal}>Clubber Profile</ModalHeader>
             <ModalBody>
-              <Table>
+              <Table responsive>
                 <thead>
                   <tr><i><h5>Personal Information</h5></i></tr>
                 </thead>

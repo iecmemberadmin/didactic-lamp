@@ -83,7 +83,7 @@ class ConfirmPending extends Component {
             <p className='centered'>No pending signup requests. </p>
           </Alert>
           :
-          <Table>
+          <Table responsive>
             <thead>
               <tr>
                 <th>Student Number</th>
