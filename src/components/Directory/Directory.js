@@ -100,7 +100,6 @@ class Directory extends Component {
                   <th>Last Name</th>
                   <th>First Name</th>
                   <th>Nickname</th>
-                  <th>Degree Program</th>
                   <th>Committee</th>
                   <th>Position</th>
                   <th>Project</th>
@@ -114,7 +113,6 @@ class Directory extends Component {
                     <td>{item.last_name}</td>
                     <td>{item.first_name}</td>
                     <td>{item.nick_name}</td>
-                    <td>{item.degree_program}</td>
                     <td>{item.committee}</td>
                     <td>{item.position}</td>
                     <td>{item.project}</td>
