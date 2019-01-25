@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import NavMenu from '../NavMenu/NavMenu';
-import {Container, Table, Button, Modal, ModalBody, ModalFooter, ModalHeader, ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Alert} from 'reactstrap';
+import {Container, Table, Badge, Button, Modal, ModalBody, ModalFooter, ModalHeader, ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Alert} from 'reactstrap';
 
 let CHOICES = [
   {real: true, display: 'Yes'},
@@ -109,6 +109,24 @@ class ViewReaffed extends Component {
     });
   }
 
+  countYes = (query) => {
+    let count = 0;
+    this.state.reaffed.map((item, i) => {
+      if(item[query] === true) {
+        count += 1;
+      }
+    });
+    return count;
+  }
+
+  getStatus = (clubber) => {
+    if(clubber.paid_fee && clubber.submitted_docs && clubber.ew_participation && clubber.ew_jersey) {
+      return (<Badge color='success'>Fully Reaffed</Badge>)
+    }else {
+      return (<Badge color='warning'>Partially Reaffed</Badge>)
+    }
+  }
+
   render() {
     return(
       <div>
@@ -121,7 +139,7 @@ class ViewReaffed extends Component {
           </Alert>
           :
           <div>
-          <h6>Total Reaffed (Updated DB info and Read Contract): {this.state.reaffed.length}</h6>
+          {/* <h6>Total Reaffed (Updated DB info and Read Contract): {this.state.reaffed.length}</h6> */}
           {/*{PROGRESS}/{this.state.reaffed.length}
            <br/>
           <Button onClick={this.setNickname}>Set Nickname</Button> */}
@@ -134,12 +152,13 @@ class ViewReaffed extends Component {
                 <th>Student Number</th>
                 <th>Nickname</th>
                 <th>Last Name</th>
-                <th>Updated Database Info?</th>
-                <th>Read Contract?</th>
-                <th>Submitted Form 5 + ID?</th>
-                <th>Paid Reaff Fee?</th>
-                <th>Answered the EW Participation Survey?</th>
-                <th>Answered the EW Jersey/Tickets Survey?</th>
+                <th>Updated Database Info? ({this.countYes('updated_db')}/{this.state.reaffed.length})</th>
+                <th>Read Contract? ({this.countYes('read_contract')}/{this.state.reaffed.length})</th>
+                <th>Submitted Form 5 + ID? ({this.countYes('submitted_docs')}/{this.state.reaffed.length})</th>
+                <th>Paid Reaff Fee? ({this.countYes('paid_fee')}/{this.state.reaffed.length})</th>
+                <th>Answered the EW Participation Survey? ({this.countYes('ew_participation')}/{this.state.reaffed.length})</th>
+                <th>Answered the EW Jersey/Tickets Survey? ({this.countYes('ew_jersey')}/{this.state.reaffed.length})</th>
+                <th>Status</th>
                 <th></th>
               </tr>
             </thead>
@@ -156,6 +175,7 @@ class ViewReaffed extends Component {
                     <td>{item.paid_fee ? 'Yes' : 'No'}</td>
                     <td>{item.ew_participation ? 'Yes' : 'No'}</td>
                     <td>{item.ew_jersey ? 'Yes' : 'No'}</td>
+                    <td>{this.getStatus(item)}</td>
                     <td><Button color='warning' onClick={() => this.toggleUpdateModal(item)}>Update</Button></td>
                   </tr>
                 )
