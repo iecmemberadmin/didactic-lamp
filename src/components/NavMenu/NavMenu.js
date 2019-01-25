@@ -56,6 +56,9 @@ class NavMenu extends Component {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown> */}
+              {/* <NavItem>
+                <NavLink href='/enggweek'>Engg Week</NavLink>
+              </NavItem> */}
               <NavItem>
                 <NavLink href="/directory">Directory</NavLink>
               </NavItem>

@@ -19,6 +19,7 @@ import ViewProcesses from './components/ADMIN/ViewProcesses/ViewProcesses';
 import ViewReaffed from './components/ADMIN/ViewReaffed/ViewReaffed';
 import Signup from './components/Signup/Signup';
 import ConfirmPending from './components/ADMIN/ConfirmPending/ConfirmPending';
+import EnggWeek from './components/EnggWeek/EnggWeek';
 
 
 class App extends Component {
@@ -45,6 +46,7 @@ class App extends Component {
           <Route exact path='/signup' component={Signup} />
           {/* <Route exact path='/dashboard' component={Dashboard} /> */}
           <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/dashboard' component={Dashboard} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/enggweek' component={EnggWeek} />
           <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/profile' component={ClubberProfile} />
           <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/directory' component={Directory} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin' component={AdminDashboard} />

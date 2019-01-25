@@ -88,10 +88,11 @@ class ViewReaffed extends Component {
     }else {
       this.setState({search: this.state.reaffed.filter(item => {
         let last_name = item.last_name.toLowerCase();
+        let nick_name = item.nick_name.toLowerCase();
         let student_number = item.clubber;
         query = query.toLowerCase();
         
-        return (last_name.includes(query) || student_number.includes(query));
+        return (last_name.includes(query) || student_number.includes(query) || nick_name.includes(query));
       })});
     }
   }
