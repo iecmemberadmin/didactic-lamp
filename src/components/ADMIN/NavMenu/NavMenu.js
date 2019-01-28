@@ -49,20 +49,9 @@ class NavMenu extends Component {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Engg Week
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem href='/admin/view/announcement'>
-                    View All Announcements
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem href='/admin/add/announcement'>
-                    Add Announcement
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <NavItem>
+                <NavLink href="/admin/view/events">Event Attendance</NavLink>
+              </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Clubbers
@@ -83,9 +72,19 @@ class NavMenu extends Component {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <NavItem>
-                <NavLink href='/admin/processes'>View Processes</NavLink>
-              </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Settings
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem href='/admin/processes'>
+                    Processes
+                  </DropdownItem>
+                  <DropdownItem href='/admin/credentials'>
+                    Admin Credentials
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
               <NavItem>
                 <NavLink href="/">Logout</NavLink>
               </NavItem>
