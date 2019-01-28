@@ -213,7 +213,7 @@ class ClubberProfile extends Component {
           </Card>}
           <br/>
           <Modal isOpen={this.state.passwordModal} toggle={this.togglePasswordModal} size='lg'>
-            <ModalHeader toggle={this.state.passwordModal}>Change Password</ModalHeader>
+            <ModalHeader toggle={this.togglePasswordModal}>Change Password</ModalHeader>
             <ModalBody>
               <Alert color="danger" isOpen={this.state.unequalAlert} toggle={this.dismissUnequalAlert}>
                 Passwords do not match.

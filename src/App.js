@@ -22,6 +22,7 @@ import ConfirmPending from './components/ADMIN/ConfirmPending/ConfirmPending';
 import EnggWeek from './components/EnggWeek/EnggWeek';
 import Attendance from './components/ADMIN/Attendance/Attendance';
 import Events from './components/ADMIN/Events/Events';
+import CurrentSubjects from './components/ADMIN/CurrentSubjects/CurrentSubjects';
 
 
 class App extends Component {
@@ -61,6 +62,7 @@ class App extends Component {
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/view/pending' component={ConfirmPending} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/view/events' component={Events} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/view/events/attendance' component={Attendance} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/acad/subjects' component={CurrentSubjects} />
           {/* <Route exact path='/profile' component={ClubberProfile} /> */}
         </Switch>
       </div>  
