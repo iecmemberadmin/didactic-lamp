@@ -29,11 +29,13 @@ class Login extends Component {
 
   logIn = () => {
     this.setState({isLoading: true, visible: false});
-    if(this.state.student_number === 'clubberadmin' && this.state.password === 'ieclubwinternals') {
+    axios.get(`https://clubberdb-api.herokuapp.com/adminauth/${this.state.student_number}/?password=${this.state.password}`)
+    .then(response => {
       this.setState({isLoading: false});
       localStorage.setItem('authenticatedAdmin', 'true');
       this.props.history.push('/admin');
-    }else {
+    })
+    .catch(error => {
       axios.get(`https://clubberdb-api.herokuapp.com/login/${this.state.student_number}/?password=${this.state.password}`)
       .then(response => {
         if(response.status === 200) {
@@ -53,8 +55,7 @@ class Login extends Component {
         localStorage.setItem('authenticated', ' false');
         localStorage.setItem('authenticatedAdmin', 'false');
       });
-    }
-    
+    });    
   }
 
   componentDidMount() {

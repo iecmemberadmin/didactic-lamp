@@ -22,6 +22,7 @@ class NavMenu extends Component {
       isOpen: false
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -88,10 +89,14 @@ class NavMenu extends Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem href='/admin/processes'>
-                    Processes
+                    Manage Processes
                   </DropdownItem>
-                  <DropdownItem href='/admin/credentials'>
-                    Admin Credentials
+                  <DropdownItem divider />
+                  <DropdownItem href='/admin/add/credentials'>
+                    Add Admin Credentials
+                  </DropdownItem>
+                  <DropdownItem href='/admin/view/credentials'>
+                    View Admin Credentials
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

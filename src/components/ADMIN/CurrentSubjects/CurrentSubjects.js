@@ -11,14 +11,15 @@ class CurrentSubjects extends Component {
       editModal: false,
       activeClubber: {},
       loadingAlert: false,
-      successInfoAlert: false
+      successInfoAlert: false,
+      search: []
     }
   }
 
   componentWillMount() {
     axios.get('https://clubberdb-api.herokuapp.com/clubbers/')
     .then(response => {
-      this.setState({clubbers: response.data});
+      this.setState({clubbers: response.data, search: response.data});
     })
   }
 
@@ -46,12 +47,32 @@ class CurrentSubjects extends Component {
     this.setState({successInfoAlert: false});
   }
 
+  searchSubjects = (event) => {
+    let query = event.target.value;
+    this.setState({search_query: query});
+    let filteredList = [];
+
+    if(query === '') {
+      this.setState({search: this.state.clubbers});
+    }else {
+      this.setState({search: this.state.clubbers.filter(item => {
+        let current_subjects = item.current_subjects.toLowerCase();
+        query = query.toLowerCase();
+        
+        return (current_subjects.includes(query));
+      })});
+    }
+  }
+
   render() {
     return(
       <div>
         <NavMenu />
         <Container>
           <h3>Academic Welfare: Subjects Database</h3>
+          <FormGroup>
+            <Input type='text' name='search_query' onChange={this.searchSubjects} value={this.state.search_query} />
+          </FormGroup>
           <Modal isOpen={this.state.editModal} toggle={() => window.location.reload()} size='lg'>
             <ModalHeader toggle={() => window.location.reload()}>{this.state.activeClubber.nick_name} {this.state.activeClubber.last_name}</ModalHeader>
             <ModalBody>
@@ -78,7 +99,7 @@ class CurrentSubjects extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.clubbers.map((item, i) => {
+              {this.state.search.map((item, i) => {
                 return(
                   <tr>
                     <td>{item.first_name} {item.last_name}</td>
