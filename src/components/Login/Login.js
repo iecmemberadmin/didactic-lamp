@@ -63,6 +63,14 @@ class Login extends Component {
     localStorage.setItem('authenticatedAdmin', 'false');
   }
 
+  handleKeyPress = (event) => {
+    switch(event.key) {
+      case 'Enter':
+        this.logIn();
+        break;
+    }
+  }
+
   render() {
     return( 
       <div className='container'>
@@ -80,11 +88,11 @@ class Login extends Component {
               <Form>
                 <FormGroup>
                   {/* <Label for="studNum">Student Number</Label> */}
-                  <Input type="text" name="studNum" id="student_number" onChange={this.onChange} placeholder="Student Number" />
+                  <Input type="text" name="studNum" id="student_number" onChange={this.onChange} placeholder="Student Number" onKeyPress={this.handleKeyPress}/>
                 </FormGroup>
                 <FormGroup>
                   {/* <Label for="password">Password</Label> */}
-                  <Input type="password" name="password" id="password" onChange={this.onChange} placeholder='Password' />
+                  <Input type="password" name="password" id="password" onChange={this.onChange} placeholder='Password' onKeyPress={this.handleKeyPress}/>
                 </FormGroup>
                 <a href='/signup'>Don't have an account? Sign up here.</a>
                 <div className='centered'><Button outline color='danger' onClick={this.logIn}>Login</Button></div>

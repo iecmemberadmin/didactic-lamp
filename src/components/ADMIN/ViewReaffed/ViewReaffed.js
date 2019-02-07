@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import NavMenu from '../NavMenu/NavMenu';
-import {Container, Table, Badge, Button, Modal, ModalBody, ModalFooter, ModalHeader, ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Alert} from 'reactstrap';
+import {Container, Table, Badge, Button, Modal, ModalBody, ModalFooter, ModalHeader, ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Alert, Row, Col} from 'reactstrap';
 
 let CHOICES = [
   {real: true, display: 'Yes'},
@@ -25,7 +25,9 @@ class ViewReaffed extends Component {
       jerseyDropdown: false,
       contractDropdown: false,
       search_query: '',
-      loadingAlert: false
+      loadingAlert: false,
+      fullReaff: 0,
+      partialReaff: 0
     };
   }
 
@@ -122,9 +124,26 @@ class ViewReaffed extends Component {
 
   getStatus = (clubber) => {
     if(clubber.paid_fee && clubber.submitted_docs && clubber.ew_participation && clubber.ew_jersey) {
-      return (<Badge color='success'>Fully Reaffed</Badge>)
+      return (<Badge color='success'>Fully Reaffed</Badge>);
     }else {
-      return (<Badge color='warning'>Partially Reaffed</Badge>)
+      return (<Badge color='warning'>Partially Reaffed</Badge>);
+    }
+  }
+
+  getCount = (status) => {
+    let FULLREAFF = 0;
+    let PARTIALREAFF = 0;
+    this.state.reaffed.map((item, i) => {
+      if(item.paid_fee && item.submitted_docs && item.ew_participation && item.ew_jersey) {
+        FULLREAFF += 1;
+      }else {
+        PARTIALREAFF += 1;
+      }
+    });
+    if(status === 'full') {
+      return FULLREAFF;
+    }else {
+      return PARTIALREAFF;
     }
   }
 
@@ -134,6 +153,10 @@ class ViewReaffed extends Component {
         <NavMenu/>
         <Container>
           <h3>Reaffed Clubbers</h3>
+          <Row>
+            <Col><h5 style={{color: 'green'}}>Fully Reaffed: {this.getCount('full')}/{this.state.reaffed.length}</h5></Col>
+            <Col><h5 style={{color: 'orange'}}>Partially Reaffed: {this.getCount('partial')}/{this.state.reaffed.length}</h5></Col>
+          </Row>
           {this.state.loadingAlert ? 
           <Alert color="light" isOpen={this.state.loadingAlert}>
             <p className='centered'>Loading data, please wait ... </p>

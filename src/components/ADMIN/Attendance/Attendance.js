@@ -105,6 +105,8 @@ class Attendance extends Component {
     .then(response => {
       localStorage.removeItem('eventName');
       this.props.history.push('/admin/view/events');
+    }).catch(error => {
+      console.log(error.response.data);
     });
   }
 
