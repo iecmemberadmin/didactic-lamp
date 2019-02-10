@@ -28,6 +28,7 @@ class NavMenu extends Component {
       isOpen: !this.state.isOpen
     });
   }
+
   render() {
     return (
       <div>
@@ -76,6 +77,9 @@ class NavMenu extends Component {
                   </DropdownItem>
                   <DropdownItem href='/admin/view/pending'>
                     Pending Signup Requests
+                  </DropdownItem>
+                  <DropdownItem href='/admin/resourceaccess'>
+                    Resource Access
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem href='/admin/add/clubber'>
