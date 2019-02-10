@@ -3,18 +3,18 @@ import axios from 'axios';
 import {Container, Table} from 'reactstrap';
 import NavMenu from '../NavMenu/NavMenu';
 
-class ResourceAccess extends Component {
+class ViewAdmin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      clubbers: []
+      admins: []
     };
   }
   
   componentWillMount() {
-    axios.get('https://clubberdb-api.herokuapp.com/clubbers/')
+    axios.get('https://clubberdb-api.herokuapp.com/adminauth/')
     .then(response => {
-      this.setState({clubbers: response.data});
+      this.setState({admins: response.data});
     })
   }
 
@@ -23,20 +23,20 @@ class ResourceAccess extends Component {
       <div>
         <NavMenu />
         <Container>
-          <h3>Resource Access</h3>
+          <h3>Admin Credentials</h3>
           <Table>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Email</th>
+                <th>Username</th>
+                <th>Password</th>
               </tr>
             </thead>
             <tbody>
-              {this.state.clubbers.map((item, i) => {
+              {this.state.admins.map((item, i) => {
                 return (
                   <tr>
-                    <td>{item.first_name} {item.last_name}</td>
-                    <td>{item.email_address}</td>
+                    <td>{item.username}</td>
+                    <td>{item.password}</td>
                   </tr>
                 );
               })}
@@ -48,4 +48,4 @@ class ResourceAccess extends Component {
   }
 }
 
-export default ResourceAccess;
+export default ViewAdmin;

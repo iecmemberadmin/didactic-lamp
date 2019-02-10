@@ -25,6 +25,7 @@ import Events from './components/ADMIN/Events/Events';
 import CurrentSubjects from './components/ADMIN/CurrentSubjects/CurrentSubjects';
 import AddAdmin from './components/ADMIN/AddAdmin/AddAdmin';
 import ResourceAccess from './components/ADMIN/ResourceAccess/ResourceAccess';
+import ViewAdmin from './components/ADMIN/ViewAdmin/ViewAdmin';
 
 
 class App extends Component {
@@ -66,6 +67,7 @@ class App extends Component {
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/view/events/attendance' component={Attendance} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/acad/subjects' component={CurrentSubjects} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/add/credentials' component={AddAdmin} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/view/credentials' component={ViewAdmin} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/resourceaccess' component={ResourceAccess} />
           {/* <Route exact path='/profile' component={ClubberProfile} /> */}
         </Switch>
