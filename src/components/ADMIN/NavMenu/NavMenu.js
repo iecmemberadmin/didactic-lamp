@@ -57,13 +57,23 @@ class NavMenu extends Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem href='/admin/acad/subjects'>
-                    Academic Welfare: Subjects Database
+                    Subjects Database
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <NavItem>
-                <NavLink href="/admin/view/events">Event Attendance</NavLink>
-              </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Internals
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem href="/admin/view/events">
+                    Event Attendance
+                  </DropdownItem>
+                  <DropdownItem href="/admin/view/birthdays">
+                    Birthdays
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Clubbers

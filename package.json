@@ -8,6 +8,7 @@
     "moment": "^2.23.0",
     "moment-timezone": "^0.5.23",
     "react": "^16.5.2",
+    "react-big-calendar": "^0.20.3",
     "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
