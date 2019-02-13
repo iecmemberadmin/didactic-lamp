@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Container, Table} from 'reactstrap';
+import {Container, Table, Alert} from 'reactstrap';
 import NavMenu from '../NavMenu/NavMenu';
 import moment from 'moment';
 
@@ -10,7 +10,8 @@ class ViewBirthdays extends Component {
     this.state = {
       monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       birthdays: [],
-      clubbers: []
+      clubbers: [],
+      loading: false
     }
   }
 
@@ -20,6 +21,7 @@ class ViewBirthdays extends Component {
       birthdays.push([]);
       this.setState({birthdays: birthdays});
     }
+    this.setState({loading: true});
     axios.get('https://clubberdb-api.herokuapp.com/clubbers/')
     .then(response => {
       this.setState({clubbers: response.data});
@@ -27,11 +29,15 @@ class ViewBirthdays extends Component {
         let month = moment(item.birthday).month();
         let data = {
           birthday: item.birthday,
-          name: item.first_name + ' (' + item.nick_name + ') ' + item.last_name 
+          name: item.first_name + ' (' + item.nick_name + ') ' + item.last_name,
+          candy: item.candy
         };
         let birthdays = this.state.birthdays;
         birthdays[month].push(data);
         this.setState({birthdays: birthdays});
+        if(i === response.data.length - 1) {
+          this.setState({loading: false});
+        }
       });
     });
   }
@@ -42,6 +48,11 @@ class ViewBirthdays extends Component {
         <NavMenu/>
         <Container>
           <h3>Birthdays</h3>
+          {this.state.loading && 
+          <Alert color='warning'>
+            Loading data, please wait...
+          </Alert>
+          }
           <Table responsive>
             {this.state.birthdays.map((item, i) => {
               return(
@@ -50,11 +61,12 @@ class ViewBirthdays extends Component {
                     <tr><h5>{this.state.monthNames[i]}</h5></tr>
                   </thead>
                   <tbody>
-                    {item.map((object, i) => {
+                    {item.sort((a, b) => moment(a.birthday).date() - moment(b.birthday).date()).map((object, i) => {
                       return(
                         <tr>
                           <td>{object.name}</td>
-                          <td>{object.birthday}</td>
+                          <td>{moment(object.birthday).format('MMM DD')}</td>
+                          <td>{object.candy}</td>
                         </tr>
                       )
                     })}
