@@ -30,7 +30,8 @@ class ViewBirthdays extends Component {
         let data = {
           birthday: item.birthday,
           name: item.first_name + ' (' + item.nick_name + ') ' + item.last_name,
-          candy: item.candy
+          candy: item.candy,
+          student_number: item.student_number
         };
         let birthdays = this.state.birthdays;
         birthdays[month].push(data);
