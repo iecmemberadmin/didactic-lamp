@@ -64,9 +64,10 @@ class ViewBirthdays extends Component {
                     {item.sort((a, b) => moment(a.birthday).date() - moment(b.birthday).date()).map((object, i) => {
                       return(
                         <tr>
-                          <td>{object.name}</td>
+                          <td>{object.name} ({object.student_number.substr(2,2)}s)</td>
                           <td>{moment(object.birthday).format('MMM DD')}</td>
                           <td>{object.candy}</td>
+                          <td>{object.closest_friends}</td>
                         </tr>
                       )
                     })}
