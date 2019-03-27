@@ -240,8 +240,8 @@ class ClubberProfile extends Component {
                     <th>Read Contract?</th>
                     <th>Submitted Form 5 + ID?</th>
                     <th>Paid Reaff Fee?</th>
-                    <th>Answered the EW Participation Survey?</th>
-                    <th>Answered the EW Jersey/Tickets Survey?</th>
+                    {/*<th>Answered the EW Participation Survey?</th>
+                    <th>Answered the EW Jersey/Tickets Survey?</th>*/}
                   </tr>
                 </thead>
                 <tbody>
@@ -251,8 +251,8 @@ class ClubberProfile extends Component {
                     <td>{this.state.reaffDetails.read_contract ? 'Yes' : 'No'}</td>
                     <td>{this.state.reaffDetails.submitted_docs ? 'Yes' : 'No'}</td>
                     <td>{this.state.reaffDetails.paid_fee ? 'Yes' : 'No'}</td>
-                    <td>{this.state.reaffDetails.ew_participation ? 'Yes' : 'No'}</td>
-                    <td>{this.state.reaffDetails.ew_jersey ? 'Yes' : 'No'}</td>
+                    {/* <td>{this.state.reaffDetails.ew_participation ? 'Yes' : 'No'}</td>
+                    <td>{this.state.reaffDetails.ew_jersey ? 'Yes' : 'No'}</td> */}
                   </tr>
                 </tbody>
               </Table>
