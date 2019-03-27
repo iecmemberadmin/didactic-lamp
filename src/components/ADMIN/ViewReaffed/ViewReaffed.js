@@ -123,7 +123,7 @@ class ViewReaffed extends Component {
   }
 
   getStatus = (clubber) => {
-    if(clubber.paid_fee && clubber.submitted_docs && clubber.ew_participation && clubber.ew_jersey) {
+    if(clubber.paid_fee && clubber.submitted_docs /*&& clubber.ew_participation && clubber.ew_jersey*/) {
       return (<Badge color='success'>Fully Reaffed</Badge>);
     }else {
       return (<Badge color='warning'>Partially Reaffed</Badge>);
@@ -180,8 +180,8 @@ class ViewReaffed extends Component {
                 <th>Read Contract? ({this.countYes('read_contract')}/{this.state.reaffed.length})</th>
                 <th>Submitted Form 5 + ID? ({this.countYes('submitted_docs')}/{this.state.reaffed.length})</th>
                 <th>Paid Reaff Fee? ({this.countYes('paid_fee')}/{this.state.reaffed.length})</th>
-                <th>Answered the EW Participation Survey? ({this.countYes('ew_participation')}/{this.state.reaffed.length})</th>
-                <th>Answered the EW Jersey/Tickets Survey? ({this.countYes('ew_jersey')}/{this.state.reaffed.length})</th>
+                {/*<th>Answered the EW Participation Survey? ({this.countYes('ew_participation')}/{this.state.reaffed.length})</th>
+                <th>Answered the EW Jersey/Tickets Survey? ({this.countYes('ew_jersey')}/{this.state.reaffed.length})</th>*/}
                 <th>Status</th>
                 <th></th>
               </tr>
@@ -197,8 +197,8 @@ class ViewReaffed extends Component {
                     <td>{item.read_contract ? 'Yes' : 'No'}</td>
                     <td>{item.submitted_docs ? 'Yes' : 'No'}</td>
                     <td>{item.paid_fee ? 'Yes' : 'No'}</td>
-                    <td>{item.ew_participation ? 'Yes' : 'No'}</td>
-                    <td>{item.ew_jersey ? 'Yes' : 'No'}</td>
+                    {/* <td>{item.ew_participation ? 'Yes' : 'No'}</td>
+                    <td>{item.ew_jersey ? 'Yes' : 'No'}</td> */}
                     <td>{this.getStatus(item)}</td>
                     <td><Button color='warning' onClick={() => this.toggleUpdateModal(item)}>Update</Button></td>
                   </tr>
