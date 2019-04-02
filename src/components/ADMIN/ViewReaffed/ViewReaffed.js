@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import NavMenu from '../NavMenu/NavMenu';
+import { CSVLink } from "react-csv";
 import {Container, Table, Badge, Button, Modal, ModalBody, ModalFooter, ModalHeader, ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Alert, Row, Col} from 'reactstrap';
 
 let CHOICES = [
@@ -9,6 +10,18 @@ let CHOICES = [
 ]
 
 let PROGRESS = 0;
+
+let headers = [
+  { label: "Student Number", key: "clubber" },
+  { label: "Nick Name", key: "nick_name" },
+  { label: "Last Name", key: "last_name" }
+];
+
+let data = [
+  { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
+  { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
+  { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
+];
 
 class ViewReaffed extends Component {
   constructor(props) {
@@ -27,7 +40,8 @@ class ViewReaffed extends Component {
       search_query: '',
       loadingAlert: false,
       fullReaff: 0,
-      partialReaff: 0
+      partialReaff: 0,
+      toExport: []
     };
   }
 
@@ -35,7 +49,20 @@ class ViewReaffed extends Component {
     this.setState({loadingAlert: true});
     axios.get('https://clubberdb-api.herokuapp.com/reaff/')
     .then(response => {
-      this.setState({reaffed: response.data, search: response.data, loadingAlert: false});
+      this.setState({reaffed: response.data, search: response.data, loadingAlert: false}, () => {
+        let toExport = [];
+        this.state.search.map((item) => {
+          if(this.getStatusValue(item)) {
+            toExport.push({
+              clubber: item.clubber,
+              nick_name: item.nick_name,
+              last_name: item.last_name
+            });
+          }
+          return null;
+        });
+        this.setState({toExport: toExport});
+      });
     });
   }
 
@@ -130,11 +157,33 @@ class ViewReaffed extends Component {
     }
   }
 
+  getStatusValue = (clubber) => {
+    if(clubber.paid_fee && clubber.submitted_docs /*&& clubber.ew_participation && clubber.ew_jersey*/) {
+      return true;
+    }else {
+      return false;
+    }
+  }
+
+  sortByStatus = () => {
+    let search = this.state.search;
+    search.sort((a, b) => {
+      if(this.getStatusValue(a) && this.getStatusValue(b)) {
+        return 0;
+      }else if(!this.getStatusValue(a) && this.getStatusValue(b)) {
+        return 1;
+      }else if(this.getStatusValue(a) && !this.getStatusValue(b)) {
+        return -1;
+      }
+    });
+    this.setState({search: search});
+  }
+
   getCount = (status) => {
     let FULLREAFF = 0;
     let PARTIALREAFF = 0;
     this.state.reaffed.map((item, i) => {
-      if(item.paid_fee && item.submitted_docs && item.ew_participation && item.ew_jersey) {
+      if(item.paid_fee && item.submitted_docs/* && item.ew_participation && item.ew_jersey*/) {
         FULLREAFF += 1;
       }else {
         PARTIALREAFF += 1;
@@ -167,6 +216,9 @@ class ViewReaffed extends Component {
           {/*{PROGRESS}/{this.state.reaffed.length}
            <br/>
           <Button onClick={this.setNickname}>Set Nickname</Button> */}
+          <CSVLink data={this.state.toExport} headers={headers} filename={"fully-reaffed-clubbers.csv"}>
+            Download list of fully reaffed clubbers
+          </CSVLink>
           <FormGroup>
             <Input type='text' name='search_query' placeholder='Search Clubbers' onChange={this.search} value={this.state.search_query}/>
           </FormGroup>
@@ -182,7 +234,7 @@ class ViewReaffed extends Component {
                 <th>Paid Reaff Fee? ({this.countYes('paid_fee')}/{this.state.reaffed.length})</th>
                 {/*<th>Answered the EW Participation Survey? ({this.countYes('ew_participation')}/{this.state.reaffed.length})</th>
                 <th>Answered the EW Jersey/Tickets Survey? ({this.countYes('ew_jersey')}/{this.state.reaffed.length})</th>*/}
-                <th>Status</th>
+                <th><Button color='secondary' onClick={this.sortByStatus}>Status</Button></th>
                 <th></th>
               </tr>
             </thead>
