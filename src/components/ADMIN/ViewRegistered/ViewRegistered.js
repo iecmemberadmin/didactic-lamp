@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavMenu from '../NavMenu/NavMenu';
-import {Container, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Alert, Label, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
+import {Container, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Alert, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import axios from 'axios';
 
 let COMMITTEES = [
@@ -114,7 +114,6 @@ class ViewRegistered extends Component {
   search = (event) => {
     let query = event.target.value;
     this.setState({search_query: query});
-    let filteredList = [];
 
     if(query === '') {
       this.setState({search: this.state.clubbers});
@@ -189,6 +188,8 @@ class ViewRegistered extends Component {
         this.setState({search: newList.sort((a,b) =>  {
           return a.project.localeCompare(b.project);
         })});
+        break;
+      default:
         break;
     }
   }

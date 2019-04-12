@@ -11,7 +11,6 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
-import iec from '../../../assets/Images/ieclub.png';
 
 class NavMenu extends Component {
   constructor(props) {
@@ -39,15 +38,11 @@ class NavMenu extends Component {
             <Nav className="ml-auto" navbar>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Announcements
+                  Secretariat
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem href='/admin/view/announcement'>
-                    View All Announcements
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem href='/admin/add/announcement'>
-                    Add Announcement
+                  <DropdownItem href='/admin/primer/view'>
+                    Clubber Primer
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -66,19 +61,6 @@ class NavMenu extends Component {
                   Internals
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem href="/admin/view/events">
-                    Event Attendance
-                  </DropdownItem>
-                  <DropdownItem href="/admin/view/birthdays">
-                    Birthdays
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Clubbers
-                </DropdownToggle>
-                <DropdownMenu right>
                   <DropdownItem href='/admin/view/registered'>
                     View All Registered Clubbers
                   </DropdownItem>
@@ -94,6 +76,13 @@ class NavMenu extends Component {
                   <DropdownItem divider />
                   <DropdownItem href='/admin/add/clubber'>
                     Add New Clubber
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem href="/admin/view/events">
+                    Event Attendance
+                  </DropdownItem>
+                  <DropdownItem href="/admin/view/birthdays">
+                    Birthdays
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

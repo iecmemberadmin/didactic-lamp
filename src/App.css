@@ -2,6 +2,10 @@
   margin: 2%;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .centered {
   text-align: center;
 }

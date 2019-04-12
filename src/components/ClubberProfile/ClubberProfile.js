@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavMenu from '../NavMenu/NavMenu';
-import {Container, Table, Card, CardBody, CardTitle, CardSubtitle, CardText, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert} from 'reactstrap';
+import {Container, Table, Card, CardBody, CardTitle, CardSubtitle, CardText, Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Alert} from 'reactstrap';
 import axios from 'axios';
 
 class ClubberProfile extends Component {
@@ -257,7 +257,7 @@ class ClubberProfile extends Component {
                 </tbody>
               </Table>
               <br/>
-              <i><b>NOTES:</b><br/>- Submit your scanned copy of Form 5 + ID to member.admin@upieclub.org or head to the tambayan and have your Form 5 + ID scanned. For scanning schedules, the team will post when the scanner will be ready at the tambayan. <br/>- Pay the Reaff Fee of PHP 150 to the Member Administration Team, or to your batch rep.<br/>- Answer the <a href='https://tinyurl.com/MyRoleThisEWOC30' target='_blank'>Engg Week Participation Survey</a> and <a href='https://tinyurl.com/EWOC30jerseytix' target='_blank'>Engg Week Jersey/Tickets Survey</a>.</i>
+              <i><b>NOTES:</b><br/>- Submit your scanned copy of Form 5 + ID to member.admin@upieclub.org or head to the tambayan and have your Form 5 + ID scanned. For scanning schedules, the team will post when the scanner will be ready at the tambayan. <br/>- Pay the Reaff Fee of PHP 150 to the Member Administration Team, or to your batch rep.<br/>- Answer the <a href='https://tinyurl.com/MyRoleThisEWOC30' target='_blank' rel="noopener noreferrer">Engg Week Participation Survey</a> and <a href='https://tinyurl.com/EWOC30jerseytix' target='_blank' rel="noopener noreferrer">Engg Week Jersey/Tickets Survey</a>.</i>
             </ModalBody>
             <ModalFooter>
               <Button color="success" onClick={this.toggleReaffDetailsModal}>Done</Button>

@@ -8,7 +8,8 @@ class ViewProcesses extends Component {
     super(props);
     this.state = {
       isActive: false,
-      showButton: false
+      showButton: false,
+      isApplicationsActive: false
     }
   }
 
@@ -19,8 +20,15 @@ class ViewProcesses extends Component {
       if(value) {
         this.setState({isActive: value});
       }
+    });
+    axios.get('https://clubberdb-api.herokuapp.com/proc/officer_applications/')
+    .then(response => {
+      let value = response.data.active;
+      if(value) {
+        this.setState({isApplicationsActive: value});
+      }
       this.setState({showButton: true});
-    })
+    });
   }
 
   changeReaffState = () => {
@@ -37,6 +45,24 @@ class ViewProcesses extends Component {
         'active': true
       }).then(response => {
         this.setState({isActive: true});
+      });
+    }
+  }
+
+  changeOfficerApplicationsState = () => {
+    if(this.state.isApplicationsActive) {
+      axios.put('https://clubberdb-api.herokuapp.com/proc/officer_applications/', {
+        'name': 'officer_applications',
+        'active': false
+      }).then(response => {
+        this.setState({isApplicationsActive: false});
+      });
+    }else {
+      axios.put('https://clubberdb-api.herokuapp.com/proc/officer_applications/', {
+        'name': 'officer_applications',
+        'active': true
+      }).then(response => {
+        this.setState({isApplicationsActive: true});
       });
     }
   }
@@ -58,6 +84,10 @@ class ViewProcesses extends Component {
               <tr>
                 <td>Reaff</td>
                 <td>{this.state.showButton && <Button color={this.state.isActive ? 'danger' : 'success'} onClick={this.changeReaffState}>{this.state.isActive ? 'Close Reaff' : 'Activate Reaff'}</Button>}</td>
+              </tr>
+              <tr>
+                <td>Officer Applications (Clubber Primer)</td>
+                <td>{this.state.showButton && <Button color={this.state.isApplicationsActive ? 'danger' : 'success'} onClick={this.changeOfficerApplicationsState}>{this.state.isApplicationsActive ? 'Close Applications' : 'Activate Applications'}</Button>}</td>
               </tr>
             </tbody>
           </Table>

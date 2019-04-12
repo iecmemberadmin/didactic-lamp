@@ -9,18 +9,10 @@ let CHOICES = [
   {real: false, display: 'No'}
 ]
 
-let PROGRESS = 0;
-
 let headers = [
   { label: "Student Number", key: "clubber" },
   { label: "Nick Name", key: "nick_name" },
   { label: "Last Name", key: "last_name" }
-];
-
-let data = [
-  { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
-  { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
-  { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
 ];
 
 class ViewReaffed extends Component {
@@ -110,7 +102,6 @@ class ViewReaffed extends Component {
   search = (event) => {
     let query = event.target.value;
     this.setState({search_query: query});
-    let filteredList = [];
 
     if(query === '') {
       this.setState({search: this.state.reaffed});
@@ -126,25 +117,13 @@ class ViewReaffed extends Component {
     }
   }
 
-  setNickname = () => {
-    this.state.reaffed.map((item, i) => {
-      axios.get(`https://clubberdb-api.herokuapp.com/clubbers/${item.clubber}/`)
-      .then(response => {
-        item.nick_name = response.data.nick_name;
-        axios.put(`https://clubberdb-api.herokuapp.com/reaff/${item.clubber}/`, item)
-        .then(response => {
-          PROGRESS += 1;
-        });
-      })
-    });
-  }
-
   countYes = (query) => {
     let count = 0;
     this.state.reaffed.map((item, i) => {
       if(item[query] === true) {
         count += 1;
       }
+      return true;
     });
     return count;
   }
@@ -175,6 +154,7 @@ class ViewReaffed extends Component {
       }else if(this.getStatusValue(a) && !this.getStatusValue(b)) {
         return -1;
       }
+      return false;
     });
     this.setState({search: search});
   }
@@ -188,6 +168,7 @@ class ViewReaffed extends Component {
       }else {
         PARTIALREAFF += 1;
       }
+      return true;
     });
     if(status === 'full') {
       return FULLREAFF;
@@ -212,10 +193,6 @@ class ViewReaffed extends Component {
           </Alert>
           :
           <div>
-          {/* <h6>Total Reaffed (Updated DB info and Read Contract): {this.state.reaffed.length}</h6> */}
-          {/*{PROGRESS}/{this.state.reaffed.length}
-           <br/>
-          <Button onClick={this.setNickname}>Set Nickname</Button> */}
           <CSVLink data={this.state.toExport} headers={headers} filename={"fully-reaffed-clubbers.csv"}>
             Download list of fully reaffed clubbers
           </CSVLink>

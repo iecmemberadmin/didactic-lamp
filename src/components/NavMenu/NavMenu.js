@@ -11,8 +11,6 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
-import iec from '../../assets/Images/ieclub.png';
-
 
 class NavMenu extends Component {
   constructor(props) {
@@ -37,30 +35,33 @@ class NavMenu extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink>Announcements</NavLink>
+                <NavLink href='/primer'>Clubber Primer</NavLink>
               </NavItem>
-              {/* <UncontrolledDropdown nav inNavbar>
+              <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Academics
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem href='/directory'>
-                    Directory
-                  </DropdownItem>
-                  <DropdownItem href='/profile'>
-                    Clubber Profile
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
+                  <DropdownItem disabled href='/rainbox'>
+                    Rainbox
                   </DropdownItem>
                 </DropdownMenu>
-              </UncontrolledDropdown> */}
+              </UncontrolledDropdown>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Internals
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem href="/directory">
+                    Directory
+                  </DropdownItem>
+                  <DropdownItem disabled>
+                    Member Evaluations
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
               <NavItem>
-                <NavLink href="/directory">Directory</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/profile">Clubber Profile</NavLink>
+                <NavLink href="/profile">Profile</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="/">Logout</NavLink>

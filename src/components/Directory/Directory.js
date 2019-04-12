@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavMenu from '../NavMenu/NavMenu';
-import {Container, Table, Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody, CardTitle, CardSubtitle, CardText, Button, FormGroup, InputGroup, InputGroupAddon, Input, Alert} from 'reactstrap';
+import {Container, Table, Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Input, Alert, Spinner} from 'reactstrap';
 import axios from 'axios';
 
 class Directory extends Component {
@@ -44,8 +44,7 @@ class Directory extends Component {
   search = (event) => {
     let query = event.target.value;
     this.setState({search_query: query});
-    let filteredList = [];
-
+    
     if(query === '') {
       this.setState({search: this.state.clubbers});
     }else {
@@ -87,7 +86,7 @@ class Directory extends Component {
           </Modal>
           {this.state.loadingAlert ?
           <Alert color="light" isOpen={this.state.loadingAlert}>
-            <p className='centered'>Loading data, please wait ... </p>
+            <p className='centered'><Spinner color='danger' type='grow'/>Loading data, please wait ... </p>
           </Alert>
           :
           <div>
@@ -97,8 +96,7 @@ class Directory extends Component {
             <Table striped hover responsive> 
               <thead>
                 <tr>
-                  <th>Last Name</th>
-                  <th>First Name</th>
+                  <th>Name</th>
                   <th>Nickname</th>
                   <th>Committee</th>
                   <th>Position</th>
@@ -110,13 +108,12 @@ class Directory extends Component {
               {this.state.search.map((item, i) => {
                 return(
                   <tr>
-                    <td>{item.last_name}</td>
-                    <td>{item.first_name}</td>
+                    <td>{item.first_name} {item.last_name}</td>
                     <td>{item.nick_name}</td>
                     <td>{item.committee}</td>
                     <td>{item.position}</td>
                     <td>{item.project}</td>
-                    <td><Button color='success' onClick={() => this.toggleDetailsModal(item)}>View Details</Button></td>
+                    <td><Button color='success' onClick={() => this.toggleDetailsModal(item)}>Details</Button></td>
                   </tr>
                 );
               })}

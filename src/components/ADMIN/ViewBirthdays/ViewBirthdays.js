@@ -29,7 +29,7 @@ class ViewBirthdays extends Component {
         let month = moment(item.birthday).month();
         let data = {
           birthday: item.birthday,
-          name: item.first_name + ' \"' + item.nick_name + '\" ' + item.last_name,
+          name: item.first_name + ' "' + item.nick_name + '" ' + item.last_name,
           candy: item.candy,
           student_number: item.student_number,
           closest_friends: item.closest_friends
@@ -40,6 +40,7 @@ class ViewBirthdays extends Component {
         if(i === response.data.length - 1) {
           this.setState({loading: false});
         }
+        return true;
       });
     });
   }

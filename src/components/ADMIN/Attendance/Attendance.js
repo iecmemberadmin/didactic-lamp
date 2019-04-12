@@ -97,6 +97,8 @@ class Attendance extends Component {
       case 'Enter':
         this.addClubber();
         break;
+      default:
+        break;
     }
   }
 

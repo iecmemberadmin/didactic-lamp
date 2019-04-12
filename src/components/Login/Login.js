@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 // eslint-disable-next-line
-import { Card, CardText, CardBody, Button, Form, FormGroup, Label, Input, FormText, Alert } from 'reactstrap';
+import { Card, CardText, CardBody, Button, Form, FormGroup, Label, Input, FormText, Alert, Spinner } from 'reactstrap';
 import iec from '../../assets/Images/ieclub.png';
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -68,6 +68,8 @@ class Login extends Component {
       case 'Enter':
         this.logIn();
         break;
+      default: 
+        break;
     }
   }
 
@@ -83,7 +85,7 @@ class Login extends Component {
                 Invalid username and/or password.
               </Alert>
               <Alert color="light" isOpen={this.state.isLoading}>
-                Verifying your login credentials, please wait...
+                <Spinner color='danger' type='grow' size='lg' /> Verifying your login credentials, please wait...
               </Alert>
               <Form>
                 <FormGroup>

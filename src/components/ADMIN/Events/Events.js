@@ -83,6 +83,9 @@ class Events extends Component {
         break;
       case 'time':
         this.setState({ampm: data});
+        break;
+      default: 
+        break;
     }
   }
 
@@ -96,6 +99,8 @@ class Events extends Component {
         break;
       case 'time':
         this.setState({timeDropdown: !this.state.timeDropdown});
+        break;
+      default:
         break;
     }
   }

@@ -50,7 +50,6 @@ class CurrentSubjects extends Component {
   searchSubjects = (event) => {
     let query = event.target.value;
     this.setState({search_query: query});
-    let filteredList = [];
 
     if(query === '') {
       this.setState({search: this.state.clubbers});
