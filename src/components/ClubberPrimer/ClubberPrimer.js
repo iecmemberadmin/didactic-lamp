@@ -248,8 +248,8 @@ class ClubberPrimer extends Component {
               </p>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={this.toggleDetailsModal}>Do Something</Button>{' '}
-              <Button color="success" onClick={this.toggleDetailsModal}>Cancel</Button>
+              {this.state.activeApplications ? <Button color='success'>Apply</Button> : null}{' '}
+              <Button color="secondary" onClick={this.toggleDetailsModal}>Cancel</Button>
             </ModalFooter>
           </Modal>
           {this.state.loadingAlert ?
