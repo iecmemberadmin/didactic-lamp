@@ -11,8 +11,7 @@ let COMMITTEES = [
   'Internals', 
   'Membership', 
   'Publicity',
-  'Matrix Project',
-  'All Committees'
+  'Matrix Project'
 ]
 
 let LEVELS = [
@@ -20,8 +19,7 @@ let LEVELS = [
   'Director',
   'Project Manager',
   'Project Head',
-  'Member',
-  'All Levels'
+  'Member'
 ]
 
 class AddPosition extends Component {
