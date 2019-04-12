@@ -67,7 +67,14 @@ class Dashboard extends Component {
                     Mem Admin Team
                   </ToastHeader>
                   <ToastBody>
-                    New features as of *insert date here*
+                    New features as of:<br/>
+                    <ul>
+                      <li>April 12, 2019</li>
+                      <ul>
+                        <li>Clubber Primer</li>
+                        <li>Redefined Dashboard</li>
+                      </ul>
+                    </ul>
                   </ToastBody>
                 </Toast>
                 </ToastBody>

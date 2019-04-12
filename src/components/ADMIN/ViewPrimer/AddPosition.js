@@ -294,7 +294,7 @@ class AddPosition extends Component {
                 </Col>
               </Row>
               <br/>
-              <p><i>For the following data, click the ... </i></p>
+              <p><i>For the following, enter the necessary data in the fields provided and click the button for them to be added to the list.</i></p>
               <Row>
                 <Col>
                   <InputGroup>
