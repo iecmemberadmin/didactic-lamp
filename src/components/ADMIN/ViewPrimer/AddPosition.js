@@ -88,9 +88,20 @@ class AddPosition extends Component {
     let value = this.state[field];
     let data = this.state.data;
     let list = this.state.data[field];
-    list.push(value);
+    if(value !== '') {
+      list.push(value);
+    }
     data[field] = list;
     this.setState({data: data, [field]: ''});
+  }
+
+  removeData = (text, field) => {
+    let data = this.state.data;
+    let list = this.state.data[field].filter(item => {
+      return item !== text
+    });
+    data[field] = list;
+    this.setState({data: data});
   }
 
   dataChange = (event) => {
@@ -162,7 +173,7 @@ class AddPosition extends Component {
               <ol>
               {this.state.data.job_description.map(item=>{
                 return(
-                  <li>{item}</li>
+                  <li><Button close onClick={() => this.removeData(item, 'job_description')}/> {item}</li>
                 )
               })}
               </ol>
@@ -171,7 +182,7 @@ class AddPosition extends Component {
               <ol>
               {this.state.data.objectives.map(item=>{
                 return(
-                  <li>{item}</li>
+                  <li><Button close onClick={() => this.removeData(item, 'objectives')}/> {item}</li>
                 )
               })}
               </ol>
@@ -180,7 +191,7 @@ class AddPosition extends Component {
               <ol>
               {this.state.data.timeline.map(item=>{
                 return(
-                  <li>{item}</li>
+                  <li><Button close onClick={() => this.removeData(item, 'timeline')}/> {item}</li>
                 )
               })}
               </ol>
@@ -191,7 +202,7 @@ class AddPosition extends Component {
               <ol>
               {this.state.data.important_skills.map(item=>{
                 return(
-                  <li>{item}</li>
+                  <li><Button close onClick={() => this.removeData(item, 'important_skills')}/> {item}</li>
                 )
               })}
               </ol>
@@ -200,7 +211,7 @@ class AddPosition extends Component {
               <ol>
               {this.state.data.challenges_faced.map(item=>{
                 return(
-                  <li>{item}</li>
+                  <li><Button close onClick={() => this.removeData(item, 'challenges_faced')}/> {item}</li>
                 )
               })}
               </ol>
@@ -209,7 +220,7 @@ class AddPosition extends Component {
               <ol>
               {this.state.data.opportunities.map(item=>{
                 return(
-                  <li>{item}</li>
+                  <li><Button close onClick={() => this.removeData(item, 'opportunities')}/> {item}</li>
                 )
               })}
               </ol>
@@ -218,7 +229,7 @@ class AddPosition extends Component {
               <ol>
               {this.state.data.resources.map(item=>{
                 return(
-                  <li><div><a href={item} target='_blank' rel='noopener noreferrer'>{item}</a></div></li>
+                  <li><Button close onClick={() => this.removeData(item, 'resources')}/> {item}</li>
                 )
               })}
               </ol>
@@ -227,7 +238,7 @@ class AddPosition extends Component {
               <ol>
               {this.state.data.document_resources.map(item=>{
                 return(
-                  <li>{item}</li>
+                  <li><Button close onClick={() => this.removeData(item, 'document_resources')}/> {item}</li>
                 )
               })}
               </ol>
@@ -236,7 +247,7 @@ class AddPosition extends Component {
               <ol>
               {this.state.data.role_history.map(item=>{
                 return(
-                  <li>{item}</li>
+                  <li><Button close onClick={() => this.removeData(item, 'role_history')}/> {item}</li>
                 )
               })}
               </ol>
