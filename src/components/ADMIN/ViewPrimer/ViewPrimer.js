@@ -249,6 +249,10 @@ class ViewPrimer extends Component {
           </Alert>
           :
           <div>
+            <Button color='success' href='/admin/primer/add'>+ Add New Position</Button>{' '}
+            <Button color='info' href='/admin/primer/applications'>View Applications</Button>
+            <br/>
+            <br/>
             <ButtonDropdown isOpen={this.state.committeeDropdown} toggle={this.toggleCommitteeDropdown}>
               <DropdownToggle caret color='danger'>
                 {this.state.selectedCommittee}
@@ -273,7 +277,6 @@ class ViewPrimer extends Component {
                 })}
               </DropdownMenu>
             </ButtonDropdown>{' '}
-            <Button color='success' href='/admin/primer/add'>+ Add New Position</Button>
             <br/>
             <br/>
             <Table>

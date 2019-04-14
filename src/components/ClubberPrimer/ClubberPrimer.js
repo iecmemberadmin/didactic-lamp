@@ -29,6 +29,7 @@ class ClubberPrimer extends Component {
     super(props);
     this.state = {
       userDetails: {},
+      userApplications: [],
       positions: [],
       filteredPositions: [],
       activePosition: {
@@ -68,7 +69,15 @@ class ClubberPrimer extends Component {
       if(value) {
         this.setState({activeApplications: value});
       }
-    })
+    });
+    axios.get(`https://clubberdb-api.herokuapp.com/clubbers/${localStorage.getItem('student_number')}/`)
+    .then(response => {
+      this.setState({userDetails: response.data});
+    });
+    axios.get(`https://clubberdb-api.herokuapp.com/applications/user/?student_number=${localStorage.getItem('student_number')}`)
+    .then(response => {
+      this.setState({userApplications: response.data});
+    });
   }
 
   toggleCommitteeDropdown = () => {
@@ -153,6 +162,29 @@ class ClubberPrimer extends Component {
         break;
     }
     this.setState({filteredPositions: filteredPositions});
+  }
+
+  sendApplication = (position) => {  
+    axios.post('https://clubberdb-api.herokuapp.com/applications/all/', {
+      committee: position.committee,
+      level: position.level,
+      project: position.project,
+      name: this.state.userDetails.first_name + ' ' + this.state.userDetails.last_name,
+      student_number: this.state.userDetails.student_number
+    }).then(response => {
+      window.location.reload();
+    })
+  }
+
+  checkIfApplied = (position) => {
+    for(let i = 0; i < this.state.userApplications.length; i++) {
+      let item = this.state.userApplications[i];
+      if(item.committee === position.committee && item.level === position.level && item.project === position.project) {
+        return true;
+      }
+      console.log(item);
+    }
+    return false;
   }
 
   render() {
@@ -300,7 +332,7 @@ class ClubberPrimer extends Component {
                       <td>{item.committee}</td>
                       <td>{item.level}</td>
                       <td>{item.project}</td>
-                      <td><Button color='warning' onClick={() => this.setActivePosition(item)}>Read More</Button>{' '}{this.state.activeApplications ? <Button color='success'>Apply</Button> : null}</td>
+                      <td><Button color='warning' onClick={() => this.setActivePosition(item)}>Read More</Button>{' '}{this.state.activeApplications ? this.checkIfApplied(item) ? <Button color='secondary' disabled>Submitted</Button> : <Button color='success' onClick={() => this.sendApplication(item)}>Apply</Button> : null}</td>
                     </tr>
                   )
                 })}

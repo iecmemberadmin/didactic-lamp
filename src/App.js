@@ -28,6 +28,7 @@ import ClubberPrimer from './components/ClubberPrimer/ClubberPrimer';
 import Rainbox from './components/Rainbox/Rainbox';
 import ViewPrimer from './components/ADMIN/ViewPrimer/ViewPrimer';
 import AddPosition from './components/ADMIN/ViewPrimer/AddPosition';
+import ViewApplications from './components/ADMIN/ViewPrimer/ViewApplications';
 
 class App extends Component {
   constructor(props) {
@@ -72,6 +73,7 @@ class App extends Component {
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/view/birthdays' component={ViewBirthdays} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/primer/view' component={ViewPrimer} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/primer/add' component={AddPosition} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/primer/applications' component={ViewApplications} />
           {/* <Route exact path='/profile' component={ClubberProfile} /> */}
         </Switch>
       </div>  
