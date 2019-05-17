@@ -146,8 +146,8 @@ class ViewPrimer extends Component {
     this.setState({filteredPositions: filteredPositions});
   }
 
-  deletePosition = () => {
-    axios.delete(`https://clubberdb-api.herokuapp.com/positions/detail/?committee=${this.state.activePosition.committee}&level=${this.state.activePosition.level}&project=${this.state.activePosition.project}`)
+  deletePosition = (position) => {
+    axios.delete(`https://clubberdb-api.herokuapp.com/positions/detail/?committee=${position.committee}&level=${position.level}&project=${position.project}`)
     .then(response => {
       window.location.reload();
     })
@@ -309,7 +309,7 @@ class ViewPrimer extends Component {
                       <td>{item.committee}</td>
                       <td>{item.level}</td>
                       <td>{item.project}</td>
-                      <td><Button color="success" onClick={() => this.editPosition(item)}>Edit Position</Button>{' '}<Button color='warning' onClick={() => this.setActivePosition(item)}>Preview</Button>{' '}<Button color="danger" onClick={this.deletePosition}>Delete Position</Button></td>
+                      <td><Button color="success" onClick={() => this.editPosition(item)}>Edit Position</Button>{' '}<Button color='warning' onClick={() => this.setActivePosition(item)}>Preview</Button>{' '}<Button color="danger" onClick={() => this.deletePosition(item)}>Delete Position</Button></td>
                     </tr>
                   )
                 })}
