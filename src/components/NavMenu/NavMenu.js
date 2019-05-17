@@ -55,7 +55,7 @@ class NavMenu extends Component {
                   <DropdownItem href="/directory">
                     Directory
                   </DropdownItem>
-                  <DropdownItem disabled>
+                  <DropdownItem href='/eval'>
                     Member Evaluations
                   </DropdownItem>
                 </DropdownMenu>

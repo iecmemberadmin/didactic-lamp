@@ -146,6 +146,20 @@ class ViewPrimer extends Component {
     this.setState({filteredPositions: filteredPositions});
   }
 
+  deletePosition = () => {
+    axios.delete(`https://clubberdb-api.herokuapp.com/positions/detail/?committee=${this.state.activePosition.committee}&level=${this.state.activePosition.level}&project=${this.state.activePosition.project}`)
+    .then(response => {
+      window.location.reload();
+    })
+  }
+
+  editPosition = (position) => {
+    localStorage.setItem('committee', position.committee);
+    localStorage.setItem('project', position.project);
+    localStorage.setItem('level', position.level);
+    this.props.history.push('/admin/primer/edit');
+  }
+
   render() {
     return(
       <div>
@@ -239,8 +253,8 @@ class ViewPrimer extends Component {
               </p>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={this.toggleDetailsModal}>Do Something</Button>{' '}
-              <Button color="success" onClick={this.toggleDetailsModal}>Cancel</Button>
+              
+              <Button color="success" onClick={this.toggleDetailsModal}>Done</Button>
             </ModalFooter>
           </Modal>
           {this.state.loadingAlert ?
@@ -295,7 +309,7 @@ class ViewPrimer extends Component {
                       <td>{item.committee}</td>
                       <td>{item.level}</td>
                       <td>{item.project}</td>
-                      <td><Button color='warning' onClick={() => this.setActivePosition(item)}>Read More</Button></td>
+                      <td><Button color="success" onClick={() => this.editPosition(item)}>Edit Position</Button>{' '}<Button color='warning' onClick={() => this.setActivePosition(item)}>Preview</Button>{' '}<Button color="danger" onClick={this.deletePosition}>Delete Position</Button></td>
                     </tr>
                   )
                 })}

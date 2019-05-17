@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Table, Button} from 'reactstrap';
+import {Container, Table, Button, Alert} from 'reactstrap';
 import NavMenu from '../NavMenu/NavMenu';
 import axios from 'axios';
 
@@ -46,6 +46,10 @@ class ViewApplications extends Component {
         <NavMenu />
         <Container>
           <h3>View Applications</h3>
+          <Button color='warning' href='/admin/primer/view'>{'<'} Back to Primer</Button>
+          <br/>
+          <br/>
+          {this.state.applications.length > 0 ?
           <Table>
             <thead>
               <tr>
@@ -70,6 +74,11 @@ class ViewApplications extends Component {
               })}
             </tbody>
           </Table>
+          :
+          <Alert color='light'>
+            <p className='centered'>No current applications available.</p>
+          </Alert>
+          }
         </Container>
       </div>
     )

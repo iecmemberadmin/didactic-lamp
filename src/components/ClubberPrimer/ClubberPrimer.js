@@ -164,7 +164,8 @@ class ClubberPrimer extends Component {
     this.setState({filteredPositions: filteredPositions});
   }
 
-  sendApplication = (position) => {  
+  sendApplication = (position) => { 
+    console.log(position);
     axios.post('https://clubberdb-api.herokuapp.com/applications/all/', {
       committee: position.committee,
       level: position.level,
@@ -280,8 +281,8 @@ class ClubberPrimer extends Component {
               </p>
             </ModalBody>
             <ModalFooter>
-              {this.state.activeApplications ? <Button color='success'>Apply</Button> : null}{' '}
-              <Button color="secondary" onClick={this.toggleDetailsModal}>Cancel</Button>
+            {this.state.activeApplications ? this.checkIfApplied(this.state.activePosition) ? <Button color='secondary' disabled>Submitted</Button> : <Button color='success' onClick={() => this.sendApplication(this.state.activePosition)} href='https://bit.ly/IEC1920Primer' target='_blank' rel='noopener noreferrer'>Apply</Button> : null}{' '}
+              <Button color="secondary" onClick={this.toggleDetailsModal}>Back</Button>
             </ModalFooter>
           </Modal>
           {this.state.loadingAlert ?
@@ -332,7 +333,7 @@ class ClubberPrimer extends Component {
                       <td>{item.committee}</td>
                       <td>{item.level}</td>
                       <td>{item.project}</td>
-                      <td><Button color='warning' onClick={() => this.setActivePosition(item)}>Read More</Button>{' '}{this.state.activeApplications ? this.checkIfApplied(item) ? <Button color='secondary' disabled>Submitted</Button> : <Button color='success' onClick={() => this.sendApplication(item)}>Apply</Button> : null}</td>
+                      <td><Button color='warning' onClick={() => this.setActivePosition(item)}>Read More</Button>{' '}{this.state.activeApplications ? this.checkIfApplied(item) ? <Button color='secondary' disabled>Submitted</Button> : <Button color='success' onClick={() => this.sendApplication(item)} href='http://bit.ly/IEC1920Primer' target='_blank' rel='noopener noreferrer'>Apply</Button> : null}</td>
                     </tr>
                   )
                 })}

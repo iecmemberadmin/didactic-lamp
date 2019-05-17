@@ -29,6 +29,8 @@ import Rainbox from './components/Rainbox/Rainbox';
 import ViewPrimer from './components/ADMIN/ViewPrimer/ViewPrimer';
 import AddPosition from './components/ADMIN/ViewPrimer/AddPosition';
 import ViewApplications from './components/ADMIN/ViewPrimer/ViewApplications';
+import MemEval from './components/MemEval/MemEval';
+import EditPosition from './components/ADMIN/ViewPrimer/EditPosition';
 
 class App extends Component {
   constructor(props) {
@@ -58,6 +60,7 @@ class App extends Component {
           <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/directory' component={Directory} />
           <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/rainbox' component={Rainbox} />
           <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/primer' component={ClubberPrimer} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/eval' component={MemEval} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin' component={AdminDashboard} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/add/clubber' component={AddClubber} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/view/registered' component={ViewRegistered} />
@@ -74,6 +77,7 @@ class App extends Component {
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/primer/view' component={ViewPrimer} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/primer/add' component={AddPosition} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/primer/applications' component={ViewApplications} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/primer/edit' component={EditPosition} />
           {/* <Route exact path='/profile' component={ClubberProfile} /> */}
         </Switch>
       </div>  
