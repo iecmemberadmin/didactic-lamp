@@ -35,7 +35,7 @@ class NavMenu extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href='/primer'>Clubber Primer</NavLink>
+                <NavLink href='/primer'>Role Applications</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>

@@ -193,7 +193,8 @@ class ClubberPrimer extends Component {
       <div>
         <NavMenu />
         <Container>
-          <h3>Clubber Primer</h3>
+          <h3>Role Applications</h3>
+          <h5>Clubber Primer</h5>
           <Modal size='lg' isOpen={this.state.detailsModal} toggle={this.toggleDetailsModal}>
             <ModalHeader toggle={this.toggleDetailsModal}>{this.state.activePosition.committee}: {this.state.activePosition.level} - {this.state.activePosition.project}</ModalHeader>
             <ModalBody  style={{overflow: 'hidden'}}>
