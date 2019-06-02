@@ -7,7 +7,7 @@ let forEvals = {
   'President': ['Executive Secretary', 'Vice President'],
   'Executive Secretary': ['President', 'Associate Secretary'],
   'Vice President': ['President', 'Associate Secretary', 'Director', 'Project Manager'],
-  'Associate Director': ['Executive Secretary', 'Vice President', 'Director', 'Project Manager'],
+  'Associate Secretary': ['Executive Secretary', 'Vice President', 'Director', 'Project Manager'],
   'Director': ['Vice President', 'Associate Secretary', 'Project Manager'],
   'Project Manager': ['Vice President', 'Associate Secretary', 'Director', 'Member'],
   'Member': ['Project Manager'],

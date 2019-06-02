@@ -31,6 +31,7 @@ import AddPosition from './components/ADMIN/ViewPrimer/AddPosition';
 import ViewApplications from './components/ADMIN/ViewPrimer/ViewApplications';
 import MemEval from './components/MemEval/MemEval';
 import EditPosition from './components/ADMIN/ViewPrimer/EditPosition';
+import ViewQuestions from './components/ADMIN/ViewPrimer/ViewQuestions';
 
 class App extends Component {
   constructor(props) {
@@ -78,6 +79,7 @@ class App extends Component {
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/primer/add' component={AddPosition} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/primer/applications' component={ViewApplications} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/primer/edit' component={EditPosition} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/primer/questions' component={ViewQuestions} />
           {/* <Route exact path='/profile' component={ClubberProfile} /> */}
         </Switch>
       </div>  

@@ -24,6 +24,17 @@ let LEVELS = [
   'All Levels'
 ]
 
+let ICONS = {
+  "Academics": "fas fa-book",
+  "Externals": "fas fa-hand-holding-heart",
+  "Extracurricular": "fas fa-running",
+  "Finance": "fas fa-money-bill-wave",
+  "Internals": "fas fa-home",
+  "Membership": "fas fa-user-friends",
+  "Publicity": "fas fa-palette",
+  "Matrix Project": "fas fa-project-diagram",
+}
+
 class ViewPrimer extends Component {
   constructor(props) {
     super(props);
@@ -263,8 +274,9 @@ class ViewPrimer extends Component {
           </Alert>
           :
           <div>
-            <Button color='success' href='/admin/primer/add'>+ Add New Position</Button>{' '}
-            <Button color='info' href='/admin/primer/applications'>View Applications</Button>
+            <Button color='success' href='/admin/primer/add'><i class="fas fa-user-plus"></i> Add New Position</Button>{' '}
+            <Button color='info' href='/admin/primer/applications'><i class="fas fa-users"></i> View Applications</Button>{' '}
+            <Button color='info' href='/admin/primer/questions'><i class="fas fa-clipboard-list"></i> View Questionnaire</Button>
             <br/>
             <br/>
             <ButtonDropdown isOpen={this.state.committeeDropdown} toggle={this.toggleCommitteeDropdown}>
@@ -306,10 +318,10 @@ class ViewPrimer extends Component {
                 {this.state.filteredPositions.map(item => {
                   return(
                     <tr>
-                      <td>{item.committee}</td>
+                      <td><i class={ICONS[item.committee]}></i> {item.committee}</td>
                       <td>{item.level}</td>
                       <td>{item.project}</td>
-                      <td><Button color="success" onClick={() => this.editPosition(item)}>Edit Position</Button>{' '}<Button color='warning' onClick={() => this.setActivePosition(item)}>Preview</Button>{' '}<Button color="danger" onClick={() => this.deletePosition(item)}>Delete Position</Button></td>
+                      <td><Button color="success" onClick={() => this.editPosition(item)}><i class="fas fa-edit"/> Edit</Button>{' '}<Button color='warning' onClick={() => this.setActivePosition(item)}><i class="fas fa-eye"></i> Details</Button>{' '}<Button color="danger" onClick={() => this.deletePosition(item)}><i class="fas fa-trash-alt"></i> Delete</Button></td>
                     </tr>
                   )
                 })}
