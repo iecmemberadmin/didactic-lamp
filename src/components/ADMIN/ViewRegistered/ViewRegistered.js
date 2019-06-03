@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import NavMenu from '../NavMenu/NavMenu';
+import { CSVLink } from "react-csv";
 import {Container, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Alert, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import axios from 'axios';
 
@@ -25,6 +26,36 @@ let POSITIONS = [
   'Member',
   'TBA'
 ]
+
+let headers = [
+  { label: "Student Number", key: "student_number" },
+  { label: "First Name", key: "first_name" },
+  { label: "Middle Name", key: "middle_name" },
+  { label: "Last Name", key: "last_name" },
+  { label: "Nick Name", key: "nick_name" },
+  { label: "Committee", key: "committee" },
+  { label: "Position", key: "position" },
+  { label: "Project", key: "project" },
+  { label: "Birthday", key: "birthday" },
+  { label: "Degree Program", key: "degree_program" },
+  { label: "Mobile Number", key: "mobile_number" },
+  { label: "Email Address", key: "email_address" },
+  { label: "Present Address", key: "present_address" },
+  { label: "Permanent Address", key: "permanent_address" },
+  { label: "Person to contact in case of emergency", key: "emergency_name" },
+  { label: "Relationship", key: "emergency_relationship" },
+  { label: "Contact Number", key: "emergency_contact" },
+  { label: "Carpool Capacity", key: "carpool_capacity" },
+  { label: "AV Equipment", key: "av_equipment" },
+  { label: "Sports Equipment", key: "sports_equipment" },
+  { label: "Instruments", key: "instruments" },
+  { label: "Current Subjects", key: "current_subjects" },
+  { label: "Closest Friends", key: "closest_friends" },
+  { label: "IEAid - Company", key: "ieaid_company" },
+  { label: "IEAid - Contact Person", key: "ieaid_contactperson" },
+  { label: "IEAid - Contact Details", key: "ieaid_contactdetails" },
+  { label: "Candy", key: "candy" }
+];
 
 class ViewRegistered extends Component {
   constructor(props) {
@@ -436,6 +467,9 @@ class ViewRegistered extends Component {
           :
           <div>
             <h6>Total Registered: {this.state.clubbers.length}</h6>
+            <CSVLink data={this.state.clubbers} headers={headers} filename={"registered-clubbers.csv"}>
+              Download list of registered clubbers
+            </CSVLink>
             <FormGroup>
               <Input type='text' name='search_query' placeholder='Search Clubbers' onChange={this.search} value={this.state.search_query}/>
             </FormGroup>

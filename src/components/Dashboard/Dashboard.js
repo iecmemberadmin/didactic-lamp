@@ -74,6 +74,10 @@ class Dashboard extends Component {
                         <li>Clubber Primer</li>
                         <li>Redefined Dashboard</li>
                       </ul>
+                      <li>June 3, 2019</li>
+                      <ul>
+                        <li>Integrated application form for role applications</li>
+                      </ul>
                     </ul>
                   </ToastBody>
                 </Toast>
