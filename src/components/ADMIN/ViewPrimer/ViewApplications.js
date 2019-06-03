@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Table, Button, Alert} from 'reactstrap';
+import {Container, Table, Button, Alert, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import NavMenu from '../NavMenu/NavMenu';
 import axios from 'axios';
 
@@ -8,7 +8,8 @@ class ViewApplications extends Component {
     super(props);
     this.state = {
       applications: [],
-      activeClubber: {}
+      activeClubber: {answers: {}},
+      modal: false
     }
   }
 
@@ -40,11 +41,43 @@ class ViewApplications extends Component {
     this.deleteApplication(application);
   }
 
+  toggleModal = () => {
+    this.setState({modal: !this.state.modal});
+  }
+
+  viewApplication = (position) => {
+    this.setState({modal: true, activeClubber: position});
+  }
+
   render() {
     return(
       <div> 
         <NavMenu />
         <Container>
+        <Modal isOpen={this.state.modal} toggle={this.toggleModal} size='lg'>
+            <ModalHeader toggle={this.toggleModal}><b>{this.state.activeClubber.name}</b><br/> <i>({this.state.activeClubber.committee} - {this.state.activeClubber.level} - {this.state.activeClubber.project})</i></ModalHeader>
+            <ModalBody>
+              <ol>
+              {this.state.activeClubber.answers !== {} ? Object.keys(this.state.activeClubber.answers).map(item => {
+                if(item !== 'Officer Role Project' && item !== 'Comments/Questions/Suggestions/Free Space') {
+                  return(
+                    <li>
+                      {item} <br/>
+                      <i>{this.state.activeClubber.answers[item]}</i>
+                    </li>
+                  )
+                } 
+              }) : null}
+              </ol>
+              Comments/Questions/Suggestions/Free Space <br/>
+              <i>{this.state.activeClubber.answers['Comments/Questions/Suggestions/Free Space']}</i>
+            </ModalBody>
+            <ModalFooter>
+              <Button color='success' onClick={() => this.approveApplication(this.state.activeClubber)}>Approve</Button>{' '}
+              <Button color='danger' onClick={()=> this.deleteApplication(this.state.activeClubber)}>Delete</Button>{' '}
+              <Button color="secondary" onClick={this.toggleModal}>Close</Button>
+            </ModalFooter>
+          </Modal>
           <h3>View Applications</h3>
           <Button color='warning' href='/admin/primer/view'>{'<'} Back to Primer</Button>
           <br/>
@@ -68,7 +101,8 @@ class ViewApplications extends Component {
                     <td>{item.level}</td>
                     <td>{item.project}</td>
                     <td>{item.name}</td>
-                    <td><Button color='success' onClick={() => this.approveApplication(item)}>Approve</Button>{' '}<Button color='danger' onClick={()=> this.deleteApplication(item)}>Delete</Button></td>
+                    {/* <td><Button color='success' onClick={() => this.approveApplication(item)}>Approve</Button>{' '}<Button color='danger' onClick={()=> this.deleteApplication(item)}>Delete</Button></td> */}
+                    <td><Button color='warning' onClick={() => this.viewApplication(item)}><i class="fas fa-eye"></i> View Application Form</Button></td>
                   </tr>
                 )
               })}

@@ -24,6 +24,17 @@ let LEVELS = [
   'All Levels'
 ]
 
+let ICONS = {
+  "Academics": "fas fa-book",
+  "Externals": "fas fa-hand-holding-heart",
+  "Extracurricular": "fas fa-running",
+  "Finance": "fas fa-money-bill-wave",
+  "Internals": "fas fa-home",
+  "Membership": "fas fa-user-friends",
+  "Publicity": "fas fa-palette",
+  "Matrix Project": "fas fa-project-diagram",
+}
+
 class ClubberPrimer extends Component {
   constructor(props) {
     super(props);
@@ -188,6 +199,15 @@ class ClubberPrimer extends Component {
     return false;
   }
 
+  answerApplication = (position) => {    
+    localStorage.setItem('position', JSON.stringify(position));
+    localStorage.setItem('userDetails', JSON.stringify(this.state.userDetails));
+    this.props.history.push('/primer/apply');
+    /*setTimeout(() => {
+      
+    }, 1000);*/
+  }
+
   render() {
     return (
       <div>
@@ -331,10 +351,10 @@ class ClubberPrimer extends Component {
                 {this.state.filteredPositions.map(item => {
                   return(
                     <tr>
-                      <td>{item.committee}</td>
+                      <td><i class={ICONS[item.committee]}></i> {item.committee}</td>
                       <td>{item.level}</td>
                       <td>{item.project}</td>
-                      <td><Button color='warning' onClick={() => this.setActivePosition(item)}>Read More</Button>{' '}{this.state.activeApplications ? this.checkIfApplied(item) ? <Button color='secondary' disabled>Submitted</Button> : <Button color='success' onClick={() => this.sendApplication(item)} href='http://bit.ly/IEC1920Primer' target='_blank' rel='noopener noreferrer'>Apply</Button> : null}</td>
+                      <td><Button color='warning' onClick={() => this.setActivePosition(item)}>Read More</Button>{' '}{this.state.activeApplications ? this.checkIfApplied(item) ? <Button color='secondary' disabled>Submitted</Button> : <Button color='success' onClick={() => this.answerApplication(item)}>Apply</Button> : null}</td>
                     </tr>
                   )
                 })}

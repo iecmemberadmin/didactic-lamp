@@ -32,6 +32,7 @@ import ViewApplications from './components/ADMIN/ViewPrimer/ViewApplications';
 import MemEval from './components/MemEval/MemEval';
 import EditPosition from './components/ADMIN/ViewPrimer/EditPosition';
 import ViewQuestions from './components/ADMIN/ViewPrimer/ViewQuestions';
+import ApplyPosition from './components/ApplyPosition/ApplyPosition';
 
 class App extends Component {
   constructor(props) {
@@ -62,6 +63,7 @@ class App extends Component {
           <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/rainbox' component={Rainbox} />
           <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/primer' component={ClubberPrimer} />
           <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/eval' component={MemEval} />
+          <PrivateRoute authenticated={localStorage.getItem('authenticated') === 'true'} exact path='/primer/apply' component={ApplyPosition} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin' component={AdminDashboard} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/add/clubber' component={AddClubber} />
           <PrivateRoute authenticated={localStorage.getItem('authenticatedAdmin') === 'true'} exact path='/admin/view/registered' component={ViewRegistered} />
