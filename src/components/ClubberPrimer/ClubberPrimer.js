@@ -302,7 +302,7 @@ class ClubberPrimer extends Component {
               </p>
             </ModalBody>
             <ModalFooter>
-            {this.state.activeApplications ? this.checkIfApplied(this.state.activePosition) ? <Button color='secondary' disabled>Submitted</Button> : <Button color='success' onClick={() => this.sendApplication(this.state.activePosition)} href='https://bit.ly/IEC1920Primer' target='_blank' rel='noopener noreferrer'>Apply</Button> : null}{' '}
+            {this.state.activeApplications ? this.checkIfApplied(this.state.activePosition) ? <Button color='secondary' disabled>Submitted</Button> : <Button color='success' onClick={() => this.answerApplication(this.state.activePosition)}>Apply</Button> : null}{' '}
               <Button color="secondary" onClick={this.toggleDetailsModal}>Back</Button>
             </ModalFooter>
           </Modal>
